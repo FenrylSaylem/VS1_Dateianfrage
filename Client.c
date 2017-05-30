@@ -1,5 +1,6 @@
 /*
     C client using sockets
+    hier gehts auch - marc
 */
 #include<stdio.h> //printf
 #include<string.h>    //strlen
