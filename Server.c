@@ -1,7 +1,7 @@
 /*
     C socket server example, handles multiple clients using threads
 */
- //ROBERT IS MY PRIVATE ESCORT
+ 
 #include<stdio.h>
 #include<string.h>    //strlen
 #include<stdlib.h>    //strlen
