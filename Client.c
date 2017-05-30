@@ -1,7 +1,6 @@
 /*
     C client using sockets
 	Thomas
-	Marc
 */
 #include<stdio.h> //printf
 #include<string.h>    //strlen
