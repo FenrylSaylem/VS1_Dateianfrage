@@ -48,11 +48,7 @@ int main(int argc , char *argv[])
     //Accept and incoming connection
     puts("Waiting for incoming connections...");
     c = sizeof(struct sockaddr_in);
-     
-     
-    /*Accept and incoming connection
-    puts("Waiting for incoming connections...");
-    c = sizeof(struct sockaddr_in);*/
+	
     while( (client_sock = accept(socket_desc, (struct sockaddr *)&client, (socklen_t*)&c)) )
     {
         puts("Connection accepted");
@@ -90,13 +86,6 @@ void *connection_handler(void *socket_desc)
     int sock = *(int*)socket_desc;
     int read_size;
     char *message , client_message[2000];
-    char *aPtr;
-    char *buffer;
-    char *words;
-    FILE *fp;
-    unsigned char test[10];
-    int i = 0;
-    int count = 0;
      
     //Send some messages to the client
     message = "Greetings! I am your connection handler\n";
@@ -108,37 +97,7 @@ void *connection_handler(void *socket_desc)
     //Receive a message from client
     while( (read_size = recv(sock , client_message , 2000 , 0)) > 0 )
     {
-	//noch fehlerhafte Programmlogik
-        /*puts("Das schaff ich noch.");
-        buffer=strdup(client_message);
-        do{
-            aPtr = strsep(&buffer, ",");
-            if  (aPtr && count < MAX_WORDS) 
-            {
-                words[count++] = *aPtr;
-            }
-        } while(aPtr && count < MAX_WORDS);
-        if (count > 5)
-        {
-            puts("Es wurden zu viele Dateien angefragt.");
-        }
-        else
-        {
-            i=0;
-            for(i; i<count;i++)
-            {
-                fp = fopen(&words[i], "r");
-                if(fp == NULL)
-                {
-                    printf("Die Datei %s konnte NICHT geöffnet werden.",&words[i]);
-                }
-                else
-                {
-                    fread(test, words[count],1,fp);
-                    puts(test);
-                }
-            }
-        }*/
+	    //TODO Message parsing/Logic [...]
 	    //test answer
 	    write(sock , client_message , strlen(client_message));
     }
