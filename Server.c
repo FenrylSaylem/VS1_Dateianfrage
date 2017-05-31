@@ -139,6 +139,8 @@ void *connection_handler(void *socket_desc)
                 }
             }
         }*/
+	    //test answer
+	    write(sock , client_message , strlen(client_message));
     }
      
     if(read_size == 0)
