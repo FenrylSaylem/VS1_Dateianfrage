@@ -83,13 +83,14 @@ void *connection_handler(void *socket_desc) {
     int sock = *(int *) socket_desc;
     int read_size;
     char *message, client_message[2000];
-    char *aPtr;
+    /*char *aPtr;
     char *buffer;
     char *words;
     FILE *fp;
     unsigned char test[10];
     int i = 0;
     int count = 0;
+    */
 
     //Send some messages to the client
     message = "Greetings! I am your connection handler\n";
