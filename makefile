@@ -1,5 +1,5 @@
 C = gcc
-CFLAGS = -Wall -pedantic -std=gnu99
+CFLAGS = -Wall -pedantic -lpthread -std=gnu99
 BIN = server client
 
 .PHONY: clean all
