@@ -16,6 +16,7 @@ void ausgeben(char *t) {
 void trennen(char *t) {
 	char *ptr;
 	char trennzeichen[] = " ";
+	ptr = strtok(t, "\n");
 	ptr = strtok(t, trennzeichen);
 
 	while (ptr != NULL) {
