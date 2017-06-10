@@ -9,6 +9,8 @@ int einlesen(char *);
 void ausgeben(char *);
 void trennen(char *);
 void suchen(char *);
+int anzahlBytes(void);
+int leseBytes(int);
 
 int einlesen(char t[]) {
 	printf("Geben Sie ein paar Worte ein: ");
@@ -36,15 +38,43 @@ void trennen(char *t) {
 
 void suchen(char *ptr) {
 	FILE* dateiname;
-
+	int i = 0;
+	
+	i = anzahlBytes();
 	printf("ausgabe: %s\n", ptr);
 	if ((dateiname = fopen(ptr, "r")) != NULL) {
 		printf("Datei existiert.\n");
+		printf("Die ersten %c Bytes: ", i);
+		leseBytes(i);
 	}
 	else {
 		printf("Datei existiert nicht.\n");
 	}
 }
+
+int anzahlBytes ( void ) {
+	int i = 0;
+	printf("Geben Sie die Anzahl an Bytes an: ");
+	i = (getchar()/8);
+	return i;
+}
+
+int leseBytes (int a) {
+        char puffer[a];
+	FILE *quelle;
+
+        quelle = fopen( "test.txt", "r+b");
+        if (quelle != NULL){
+                fread(&puffer, sizeof(char), a, quelle);
+	}
+
+        // a-1, sonst gibt er eine Stelle zu viel aus
+        for (int i = 0; i < a - 1; i++) {
+                printf( "Wert %d = %c\n", i, puffer[i]);
+        }
+        return 0;
+}
+
 
 int main(void) {
 	char text[MAX];
