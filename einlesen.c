@@ -75,6 +75,19 @@ int leseBytes (int a) {
         return 0;
 }
 
+//Den Vergleich macht er richtig, er akzeptiert aber leider auch eingaben >=10 indem er die Zahl wertet
+int test(int i){
+  printf("Geben Sie eine Zahl zwischen 0 und 9 ein\n");
+  int c = getchar();
+	if ((c>47)&&(c<=57)){
+	    return 0;
+	}
+	else
+	  {
+	    return 1;
+	  }
+  return i;
+}
 
 int main(void) {
 	char text[MAX];
