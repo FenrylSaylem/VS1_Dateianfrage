@@ -1,7 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX 100
+
+//Prototypes
+int einlesen(char *);
+void ausgeben(char *);
+void trennen(char *);
+void suchen(char *);
 
 int einlesen(char t[]) {
 	printf("Geben Sie ein paar Worte ein: ");
@@ -22,12 +29,12 @@ void trennen(char *t) {
 	while (ptr != NULL) {
 		suchen(ptr);
 		ptr = strtok(NULL, trennzeichen);
-		int anzahl = sizeof(ptr);
-		printf("Anzahl Einheiten im Array: %d", anzahl);
+		//int anzahl = sizeof(ptr);
+		//printf("Anzahl Einheiten im Array: %d", anzahl);
 	}
 }
 
-int suchen(char *ptr) {
+void suchen(char *ptr) {
 	FILE* dateiname;
 
 	printf("ausgabe: %s\n", ptr);
@@ -46,3 +53,4 @@ int main(void) {
 	trennen(text);
 	return 0;
 }
+
