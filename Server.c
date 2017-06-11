@@ -14,7 +14,7 @@
 #include<stdbool.h>
 #include<ctype.h>
 
-#define MAX_WORDS 5
+
 
 //the thread function
 void *connection_handler(void *);
@@ -108,7 +108,7 @@ char *leseBytes(int n, FILE *quelle) {
  * sucht ob Datei existiert
  * wenn ja oeffne und lese ersten 4 Bytes
  *
- * @param **ptr Pointer auf Teilstring
+ * @param ptr Pointer auf Teilstring
  * @param n Anzahl der Bytes
  */
 char *suchen(char **ptr, int n) {
@@ -125,7 +125,7 @@ char *suchen(char **ptr, int n) {
  * trennt den String an jedem leerzeichen
  * schneidet '/n' am schluss ab
  *
- * @param *t Array mit String
+ * @param t Array mit String
  */
 int trennen(char t[], char *w[]) {
     int i = 0;
@@ -159,7 +159,7 @@ bool is_valid_int(char str) {
 
     // Check for non-digit chars in the rest of the stirng.
     //
-    while (str-2) {
+    while (str) {
         if (!isdigit(str))
             return false;
         else
@@ -172,7 +172,7 @@ bool is_valid_int(char str) {
 /**
  * Connection handler serves data for each client connection
  *
- * @param *socket_desc socket connection to client
+ * @param socket_desc socket connection to client
  *
  * */
 void *connection_handler(void *socket_desc) {
@@ -196,7 +196,7 @@ void *connection_handler(void *socket_desc) {
     while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
 
         argumentCount = trennen(client_message, &words[0]);
-        if (is_valid_int(*words[0])) {
+        if (!is_valid_int(*words[0])) {
             bytes = (int) *words[0];
         } else {
             message = "The first Argument was not an amount of bytes.";
