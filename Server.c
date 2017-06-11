@@ -1,8 +1,6 @@
 /**
  *  Server.c
  *
- *  Created on: 11.06.2017
- *
  *  creates a Server with Socket, that delivers a list of files and send n bytes of files to a client
 */
 
@@ -19,6 +17,12 @@
 //the thread function
 void *connection_handler(void *);
 
+/**
+ * Creates socket and is waiting for client connections
+ * creates a connection handler thread for every client instance
+ *
+ * @return 0 if succesfully
+ */
 int main(void) {
     int socket_desc, client_sock, c, *new_sock;
     struct sockaddr_in server, client;
@@ -80,8 +84,11 @@ int main(void) {
     return 0;
 }
 
-/*
- * This will handle connection for each client
+/**
+ * Connection handler serves data for each client connection
+ *
+ * @param socket_desc socket connection to client
+ *
  * */
 void *connection_handler(void *socket_desc) {
     //Get the socket descriptor

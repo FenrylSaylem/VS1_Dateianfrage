@@ -19,7 +19,7 @@ Include dependency graph for Server.\+c\+:
 \item 
 void $\ast$ \hyperlink{Server_8c_ad2706378d6eedf7692cb32fcdfb025b0}{connection\+\_\+handler} (void $\ast$)
 \item 
-int \hyperlink{Server_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+int \hyperlink{Server_8c_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)
 \end{DoxyCompactItemize}
 
 
@@ -32,8 +32,6 @@ int \hyperlink{Server_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, cha
 
 \hyperlink{Server_8c}{Server.\+c}
 
-Created on\+: 11.\+06.\+2017
-
 creates a Server with Socket, that delivers a list of files and send n bytes of files to a client 
 
 \subsection{Function Documentation}
@@ -43,9 +41,21 @@ creates a Server with Socket, that delivers a list of files and send n bytes of 
 \subsubsection{\texorpdfstring{connection\+\_\+handler()}{connection\_handler()}}
 {\footnotesize\ttfamily void $\ast$ connection\+\_\+handler (\begin{DoxyParamCaption}\item[{void $\ast$}]{socket\+\_\+desc }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{Server_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{Server_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+Connection handler serves data for each client connection
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\+\_\+desc} & socket connection to client \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Server_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{Server_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
 \index{Server.\+c@{Server.\+c}!main@{main}}
 \index{main@{main}!Server.\+c@{Server.\+c}}
 \subsubsection{\texorpdfstring{main()}{main()}}
-{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
+Creates socket and is waiting for client connections creates a connection handler thread for every client instance
+
+\begin{DoxyReturn}{Returns}
+0 if succesfully 
+\end{DoxyReturn}

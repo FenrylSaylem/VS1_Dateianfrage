@@ -11,15 +11,15 @@ Include dependency graph for Client.\+c\+:
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{Client_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+int \hyperlink{Client_8c_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)
 \end{DoxyCompactItemize}
 
 
 \subsection{Function Documentation}
-\mbox{\Hypertarget{Client_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{Client_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\mbox{\Hypertarget{Client_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{Client_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
 \index{Client.\+c@{Client.\+c}!main@{main}}
 \index{main@{main}!Client.\+c@{Client.\+c}}
 \subsubsection{\texorpdfstring{main()}{main()}}
-{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
-C client using sockets 
+Client for requesting data from a server Client ask for specific files and get n bytes of each file Creates a socket and connects to a server Requests the data from the server and wait for the reply 

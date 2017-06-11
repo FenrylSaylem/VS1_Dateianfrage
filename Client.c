@@ -1,5 +1,6 @@
 /**
- *  C client using sockets
+ *  Client for requesting data from a server
+ *  Client ask for specific files and get n bytes of each file
  *
 */
 
@@ -10,7 +11,14 @@
 #include<arpa/inet.h> //inet_addr
 #include<zconf.h> //close
 
-int main(int argc, char *argv[]) {
+/**
+ * Creates a socket and connects to a server
+ * Requests the data from the server and wait for the reply
+ *
+ *
+ */
+
+int main(void) {
     int sock;
     struct sockaddr_in server;
     char message[1000], server_reply[2000];
