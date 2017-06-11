@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['server_2ec',['Server.c',['../Server_8c.html',1,'']]],
-  ['suchen',['suchen',['../einlesen_8c.html#a46b4157170e2d276a79544e7e9ed3840',1,'suchen(char *ptr):&#160;einlesen.c'],['../einlesen_8h.html#a9efff36e158e110e51ade96d3bc80d90',1,'suchen(char *):&#160;einlesen.c']]]
+  ['trennen',['trennen',['../einlesen_8c.html#a05225627bbd1e832f3b76ba81b1f32b2',1,'trennen(char *t):&#160;einlesen.c'],['../einlesen_8h.html#a78c5dfcd7dd5d4b424de32e680c30070',1,'trennen(char *):&#160;einlesen.c'],['../Server_8c.html#addd08d1c5490799098024a85fd847367',1,'trennen(char *t):&#160;Server.c']]]
 ];

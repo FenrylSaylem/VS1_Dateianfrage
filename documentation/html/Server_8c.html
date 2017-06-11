@@ -72,6 +72,8 @@ $(function() {
 <code>#include &lt;arpa/inet.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;pthread.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;ctype.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Server.c:</div>
 <div class="dyncontent">
@@ -90,6 +92,14 @@ Functions</h2></td></tr>
 <tr class="separator:ad2706378d6eedf7692cb32fcdfb025b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a840291bc02cba5474a4cb46a9b9566fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Server_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a> (void)</td></tr>
 <tr class="separator:a840291bc02cba5474a4cb46a9b9566fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada7b981846f9a620c78c8a3bbd9cd46f"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Server_8c.html#ada7b981846f9a620c78c8a3bbd9cd46f">leseBytes</a> (int n, FILE *quelle)</td></tr>
+<tr class="separator:ada7b981846f9a620c78c8a3bbd9cd46f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2959b7887c90f1593930d2b981ca0e39"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Server_8c.html#a2959b7887c90f1593930d2b981ca0e39">suchen</a> (char **ptr, int n)</td></tr>
+<tr class="separator:a2959b7887c90f1593930d2b981ca0e39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addd08d1c5490799098024a85fd847367"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Server_8c.html#addd08d1c5490799098024a85fd847367">trennen</a> (char *t)</td></tr>
+<tr class="separator:addd08d1c5490799098024a85fd847367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25107087bcd33c6cbafe1707dc1c8bd6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Server_8c.html#a25107087bcd33c6cbafe1707dc1c8bd6">is_valid_int</a> (char str)</td></tr>
+<tr class="separator:a25107087bcd33c6cbafe1707dc1c8bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="acc74efdd29e34bab649ad665326edfe6"></a>
@@ -127,7 +137,68 @@ Functions</h2></td></tr>
 <p>Connection handler serves data for each client connection</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">socket_desc</td><td>socket connection to client </td></tr>
+    <tr><td class="paramname">*socket_desc</td><td>socket connection to client </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a25107087bcd33c6cbafe1707dc1c8bd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25107087bcd33c6cbafe1707dc1c8bd6">&#9670;&nbsp;</a></span>is_valid_int()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool is_valid_int </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>prüft einen string ob er nur Zahlen enthält</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>zu prüfender String </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true or false </dd></dl>
+
+</div>
+</div>
+<a id="ada7b981846f9a620c78c8a3bbd9cd46f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada7b981846f9a620c78c8a3bbd9cd46f">&#9670;&nbsp;</a></span>leseBytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* leseBytes </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>quelle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>liest die ersten Bytes</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td>Anzahl der zu lesenden Bytes </td></tr>
   </table>
   </dd>
 </dl>
@@ -151,6 +222,67 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Creates socket and is waiting for client connections creates a connection handler thread for every client instance</p>
 <dl class="section return"><dt>Returns</dt><dd>0 if succesfully </dd></dl>
+
+</div>
+</div>
+<a id="a2959b7887c90f1593930d2b981ca0e39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2959b7887c90f1593930d2b981ca0e39">&#9670;&nbsp;</a></span>suchen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* suchen </td>
+          <td>(</td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>sucht ob Datei existiert wenn ja oeffne und lese ersten 4 Bytes</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">**ptr</td><td>Pointer auf Teilstring </td></tr>
+    <tr><td class="paramname">n</td><td>Anzahl der Bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="addd08d1c5490799098024a85fd847367"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addd08d1c5490799098024a85fd847367">&#9670;&nbsp;</a></span>trennen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* trennen </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>trennt den String an jedem leerzeichen schneidet '/n' am schluss ab</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">*t</td><td>Array mit String </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

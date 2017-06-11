@@ -11,8 +11,8 @@
 #include<arpa/inet.h> //inet_addr
 #include<unistd.h>    //write
 #include<pthread.h> //for threading , link with lpthread
-#include <stdbool.h>
-#include <ctype.h>
+#include<stdbool.h>
+#include<ctype.h>
 
 #define MAX_WORDS 5
 
@@ -108,7 +108,8 @@ char *leseBytes(int n, FILE *quelle) {
  * sucht ob Datei existiert
  * wenn ja oeffne und lese ersten 4 Bytes
  *
- * @param *ptr Pointer auf Teilstring
+ * @param **ptr Pointer auf Teilstring
+ * @param n Anzahl der Bytes
  */
 char *suchen(char **ptr, int n) {
     FILE *dateiname;
@@ -135,7 +136,12 @@ char *trennen(char *t) {
     return ptr;
 }
 
-
+/**
+ * prüft einen string ob er nur Zahlen enthält
+ *
+ * @param str zu prüfender String
+ * @return  true or false
+ */
 bool is_valid_int(char str) {
     // Handle negative numbers.
     //
@@ -162,7 +168,7 @@ bool is_valid_int(char str) {
 /**
  * Connection handler serves data for each client connection
  *
- * @param socket_desc socket connection to client
+ * @param *socket_desc socket connection to client
  *
  * */
 void *connection_handler(void *socket_desc) {

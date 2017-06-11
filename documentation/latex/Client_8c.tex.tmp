@@ -5,7 +5,7 @@
 {\ttfamily \#include $<$string.\+h$>$}\newline
 {\ttfamily \#include $<$sys/socket.\+h$>$}\newline
 {\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
-{\ttfamily \#include $<$zconf.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
 Include dependency graph for Client.\+c\+:
 % FIG 0
 \subsection*{Functions}

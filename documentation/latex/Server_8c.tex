@@ -7,6 +7,8 @@
 {\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
 {\ttfamily \#include $<$unistd.\+h$>$}\newline
 {\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
 Include dependency graph for Server.\+c\+:
 % FIG 0
 \subsection*{Macros}
@@ -20,6 +22,14 @@ Include dependency graph for Server.\+c\+:
 void $\ast$ \hyperlink{Server_8c_ad2706378d6eedf7692cb32fcdfb025b0}{connection\+\_\+handler} (void $\ast$)
 \item 
 int \hyperlink{Server_8c_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)
+\item 
+char $\ast$ \hyperlink{Server_8c_ada7b981846f9a620c78c8a3bbd9cd46f}{lese\+Bytes} (int n, F\+I\+LE $\ast$quelle)
+\item 
+char $\ast$ \hyperlink{Server_8c_a2959b7887c90f1593930d2b981ca0e39}{suchen} (char $\ast$$\ast$ptr, int n)
+\item 
+char $\ast$ \hyperlink{Server_8c_addd08d1c5490799098024a85fd847367}{trennen} (char $\ast$t)
+\item 
+bool \hyperlink{Server_8c_a25107087bcd33c6cbafe1707dc1c8bd6}{is\+\_\+valid\+\_\+int} (char str)
 \end{DoxyCompactItemize}
 
 
@@ -45,7 +55,36 @@ Connection handler serves data for each client connection
 
 
 \begin{DoxyParams}{Parameters}
-{\em socket\+\_\+desc} & socket connection to client \\
+{\em $\ast$socket\+\_\+desc} & socket connection to client \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Server_8c_a25107087bcd33c6cbafe1707dc1c8bd6}\label{Server_8c_a25107087bcd33c6cbafe1707dc1c8bd6}} 
+\index{Server.\+c@{Server.\+c}!is\+\_\+valid\+\_\+int@{is\+\_\+valid\+\_\+int}}
+\index{is\+\_\+valid\+\_\+int@{is\+\_\+valid\+\_\+int}!Server.\+c@{Server.\+c}}
+\subsubsection{\texorpdfstring{is\+\_\+valid\+\_\+int()}{is\_valid\_int()}}
+{\footnotesize\ttfamily bool is\+\_\+valid\+\_\+int (\begin{DoxyParamCaption}\item[{char}]{str }\end{DoxyParamCaption})}
+
+prüft einen string ob er nur Zahlen enthält
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & zu prüfender String \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true or false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{Server_8c_ada7b981846f9a620c78c8a3bbd9cd46f}\label{Server_8c_ada7b981846f9a620c78c8a3bbd9cd46f}} 
+\index{Server.\+c@{Server.\+c}!lese\+Bytes@{lese\+Bytes}}
+\index{lese\+Bytes@{lese\+Bytes}!Server.\+c@{Server.\+c}}
+\subsubsection{\texorpdfstring{lese\+Bytes()}{leseBytes()}}
+{\footnotesize\ttfamily char$\ast$ lese\+Bytes (\begin{DoxyParamCaption}\item[{int}]{n,  }\item[{F\+I\+LE $\ast$}]{quelle }\end{DoxyParamCaption})}
+
+liest die ersten Bytes
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & Anzahl der zu lesenden Bytes \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{Server_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{Server_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
@@ -59,3 +98,31 @@ Creates socket and is waiting for client connections creates a connection handle
 \begin{DoxyReturn}{Returns}
 0 if succesfully 
 \end{DoxyReturn}
+\mbox{\Hypertarget{Server_8c_a2959b7887c90f1593930d2b981ca0e39}\label{Server_8c_a2959b7887c90f1593930d2b981ca0e39}} 
+\index{Server.\+c@{Server.\+c}!suchen@{suchen}}
+\index{suchen@{suchen}!Server.\+c@{Server.\+c}}
+\subsubsection{\texorpdfstring{suchen()}{suchen()}}
+{\footnotesize\ttfamily char$\ast$ suchen (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{ptr,  }\item[{int}]{n }\end{DoxyParamCaption})}
+
+sucht ob Datei existiert wenn ja oeffne und lese ersten 4 Bytes
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$$\ast$ptr} & Pointer auf Teilstring \\
+\hline
+{\em n} & Anzahl der Bytes \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Server_8c_addd08d1c5490799098024a85fd847367}\label{Server_8c_addd08d1c5490799098024a85fd847367}} 
+\index{Server.\+c@{Server.\+c}!trennen@{trennen}}
+\index{trennen@{trennen}!Server.\+c@{Server.\+c}}
+\subsubsection{\texorpdfstring{trennen()}{trennen()}}
+{\footnotesize\ttfamily char$\ast$ trennen (\begin{DoxyParamCaption}\item[{char $\ast$}]{t }\end{DoxyParamCaption})}
+
+trennt den String an jedem leerzeichen schneidet \textquotesingle{}/n\textquotesingle{} am schluss ab
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$t} & Array mit String \\
+\hline
+\end{DoxyParams}
