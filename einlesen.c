@@ -1,3 +1,13 @@
+/*
+ * @einlesen.c
+ * @author  Gruppe  Wirth
+ * @version 1.0
+ *
+ * @section DESCRIPTION
+ *
+ * Programm zum Einlesen, Prüfen und Trennen von Texteingaben, Suchen von Dateinamen.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,15 +22,31 @@ void suchen(char *);
 int anzahlBytes(void);
 int leseBytes(int);
 
-int einlesen(char t[]) {
+/*
+ * Funktion zum einlesen von Worten bzw Dateinamen
+ * @param char t[] eingelesene Worte bzw Dateinamen
+*/
+
+void einlesen(char t[]) {
 	printf("Geben Sie ein paar Worte ein: ");
 	fgets(t, MAX, stdin);
-	return 0;
 }
+
+
+/*
+ * Funktion zum Ausgeben der Eingabe- Testfunktion
+*/
 
 void ausgeben(char *t) {
 	printf("Ihre Eingabe: %s", t);
 }
+
+
+/*
+ * Funktion zum Trennen von Worten bzw Dateinamen
+ * @param char t[] eingelesene Dateinamen
+ * @param char ptr nach Leerzeichen und \n getrennte Dateinamen
+*/
 
 void trennen(char *t) {
 	char *ptr;
@@ -35,6 +61,14 @@ void trennen(char *t) {
 		//printf("Anzahl Einheiten im Array: %d", anzahl);
 	}
 }
+
+
+/*
+ * Funktion zum Suchen von Dateinamen
+ * @param char t[] eingelesene Dateinamen
+ * @param FILE dateiname Pointer zum Aufrufen von Dateinamen
+ * @param i Laufzeitvariable
+*/
 
 void suchen(char *ptr) {
 	FILE* dateiname;
@@ -52,42 +86,69 @@ void suchen(char *ptr) {
 	}
 }
 
-int anzahlBytes ( void ) {
-	int i = 0;
+
+/*
+ * Funktion zum Einlesen von Byte-Berten
+ * @param ruechkabewert Anzahl der eingelesenen Bytes
+*/
+
+int anzahlBytes (void) {
+	int rueckgabewert = 0;
 	printf("Geben Sie die Anzahl an Bytes an: ");
-	i = (getchar()/8);
-	return i;
+	rueckgabewert = (getchar()/8);
+	return rueckgabewert;
 }
 
-int leseBytes (int a) {
-        char puffer[a];
+
+/*
+ * Funktion zum Einlesen der ersten n Bytes einer Datei
+ * @param char puffer[] eingelesene Worte einer Dtei
+ * @param int anzahl Anzahl der einegelesenen Bytes
+ * @param FILE quelle Pointer auf die zu lesende Datei
+ * @param int i Laufzeitvariable
+*/
+
+int leseBytes (int anzahl) {
+        char puffer[anzahl];
 	FILE *quelle;
 
         quelle = fopen( "test.txt", "r+b");
         if (quelle != NULL){
-                fread(&puffer, sizeof(char), a, quelle);
+                fread(&puffer, sizeof(char), anzahl, quelle);
 	}
 
-        // a-1, sonst gibt er eine Stelle zu viel aus
-        for (int i = 0; i < a - 1; i++) {
+        // anzahl-1, sonst gibt er eine Stelle zu viel aus
+        for (int i = 0; i < anzahl - 1; i++) {
                 printf( "Wert %d = %c\n", i, puffer[i]);
         }
         return 0;
 }
 
-//Den Vergleich macht er richtig, er akzeptiert aber leider auch eingaben >=10 indem er die Zahl wertet
-int test(int i){
+
+/*
+ * Funktion zum Testen von Eingaben auf einstellige Zahlen
+ * @param int c Testvariable 
+ * @return -1 bei ungueltiger Eingabe
+ * @return c bei gültiger Eingabe sprich bei Integerwert die vorderste Zahl
+*/
+
+//Den Vergleich macht er richtig, er akzeptiert aber leider auch eingaben >=10 indem er die erste Zahl wertet
+int test(void){
   printf("Geben Sie eine Zahl zwischen 0 und 9 ein\n");
   int c = getchar();
 	if ((c>47)&&(c<=57)){
-	    return 0;
+	    return c;
 	}
-	else
-	  {
-	    return 1;
-	  }
-  return i;
+	else{
+	    return -1;
+	}
 }
+
+
+/*
+ * Hauptprogrammaufruf
+ * @param text pointer auf einen Textbereich mit der laenge MAX
+*/
 
 int main(void) {
 	char text[MAX];
