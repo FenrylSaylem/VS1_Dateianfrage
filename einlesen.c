@@ -1,10 +1,11 @@
-
-/*
+/**
+ * einlesen.c
+ *
  * liest Dateinamen von Benutzer
  * teilt den String
  * prueft ob Datei existiert
  * oeffnet datei und liest erste vier bytes
- * main
+ *
  */
 
 
@@ -118,4 +119,3 @@ int main(void) {
 	trennen(text);
 	return 0;
 }
-

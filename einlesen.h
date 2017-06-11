@@ -1,9 +1,8 @@
-
-/*
+/**
  * einlesen.h
  *
- *  Created on: 11.06.2017
- *      Author: wolf
+ * Created on: 11.06.2017
+ *     Author: wolf
  */
 
 #ifndef EINLESEN_H_

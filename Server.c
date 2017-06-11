@@ -1,5 +1,7 @@
-/*
-    C socket server example, handles multiple clients using threads
+/**
+ *  Server.c
+ *
+ *  creates a Server with Socket, that delivers a list of files and send n bytes of files to a client
 */
 
 #include<stdio.h>
@@ -15,14 +17,21 @@
 //the thread function
 void *connection_handler(void *);
 
-int main(int argc, char *argv[]) {
+/**
+ * Creates socket and is waiting for client connections
+ * creates a connection handler thread for every client instance
+ *
+ * @return 0 if succesfully
+ */
+int main(void) {
     int socket_desc, client_sock, c, *new_sock;
     struct sockaddr_in server, client;
 
     //Create socket
     socket_desc = socket(AF_INET, SOCK_STREAM, 0);
     if (socket_desc == -1) {
-        printf("Could not create socket");
+        perror("Could not create socket");
+        exit(EXIT_FAILURE);
     }
     puts("Socket created");
 
@@ -59,7 +68,7 @@ int main(int argc, char *argv[]) {
 
         if (pthread_create(&sniffer_thread, NULL, connection_handler, (void *) new_sock) < 0) {
             perror("could not create thread");
-            return 1;
+            exit(EXIT_FAILURE);
         }
 
         //Now join the thread , so that we dont terminate before the thread
@@ -75,21 +84,24 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-/*
- * This will handle connection for each client
+/**
+ * Connection handler serves data for each client connection
+ *
+ * @param socket_desc socket connection to client
+ *
  * */
 void *connection_handler(void *socket_desc) {
     //Get the socket descriptor
     int sock = *(int *) socket_desc;
     int read_size;
     char *message, client_message[2000];
-    char *aPtr;
-    char *buffer;
-    char *words;
-    FILE *fp;
-    unsigned char test[10];
-    int i = 0;
-    int count = 0;
+//    char *aPtr;
+//    char *buffer;
+//    char *words;
+//    FILE *fp;
+//    unsigned char test[10];
+//    int i = 0;
+//    int count = 0;
 
     //Send some messages to the client
     message = "Greetings! I am your connection handler\n";
