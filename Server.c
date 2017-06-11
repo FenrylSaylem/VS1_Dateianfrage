@@ -179,7 +179,7 @@ void *connection_handler(void *socket_desc) {
     char *message, client_message[2000];
 //    char *aPtr;
 //    char *buffer;
-    char **words = NULL;
+    char *words[100];
 //    FILE *fp;
 //    unsigned char test[10];
     int i = 0;
