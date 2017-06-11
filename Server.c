@@ -92,16 +92,16 @@ int main(void) {
  * @param a Anzahl der zu lesenden Bytes
  */
 char* leseBytes(int n, FILE* quelle) {
-	char puffer[n];
-	char *msg="";
+    char puffer[n];
+    char *msg="";
 
-		fread(&puffer, sizeof(char), n, quelle);
+        fread(&puffer, sizeof(char), n, quelle);
 
-	for (int i = 0; i < n; i++) {
-		
-		msg=msg+puffer[i];
-	}
-	return msg;
+    for (int i = 0; i < n; i++) {
+        
+        msg=msg+puffer[i];
+    }
+    return msg;
 }
 
 /**
@@ -111,13 +111,13 @@ char* leseBytes(int n, FILE* quelle) {
  * @param *ptr Pointer auf Teilstring
  */
 char* suchen(char **ptr, int n) {
-	FILE* dateiname;
+    FILE* dateiname;
 
-	if ((dateiname = fopen(*ptr, "r")) != NULL) {
-		return strcat("Datei existiert.\n Die angeforderten Bytes:", leseBytes(n, dateiname));
-	} else {
-		return "Datei existiert nicht.\n";
-	}
+    if ((dateiname = fopen(*ptr, "r")) != NULL) {
+        return strcat("Datei existiert.\n Die angeforderten Bytes:", leseBytes(n, dateiname));
+    } else {
+        return "Datei existiert nicht.\n";
+    }
 }
 
 /**
@@ -127,12 +127,12 @@ char* suchen(char **ptr, int n) {
  * @param *t Array mit String
  */
 char* trennen(char *t) {
-	char *ptr;
-	char trennzeichen[] = " ";
-	ptr = strtok(t, "\n");
-	ptr = strtok(t, trennzeichen);
-
-	return ptr;
+    char *ptr;
+    char trennzeichen[] = ",";
+    ptr = strtok(t, "\n");
+    ptr = strtok(t, trennzeichen);
+    puts(ptr);
+    return ptr;
 }
 
 
@@ -174,35 +174,39 @@ void *connection_handler(void *socket_desc) {
     char *message, client_message[2000];
 //    char *aPtr;
 //    char *buffer;
-      char **words = NULL;
+      char *words[100];
 //    FILE *fp;
 //    unsigned char test[10];
       int i = 0;
       int bytes = 0;
 
     //Send some messages to the client
-    message = "Greetings! I am your connection handler\n What Files are you asking for, and how many Bytes shall be given? Split the arguments with a space, leading with the number of bytes.\n";
+    message = "Greetings! I am your connection handler\n What Files are you asking for, and how many Bytes shall be given? Split the arguments with a comma, leading with the number of bytes.\n";
     write(sock, message, strlen(message));
 
     //Receive a message from client, parse it and answer
-    while ((read_size = recv(sock, client_message, 2000, 0)) > 0 && i < 5) {
-        words[i]=trennen(client_message);
-		if(i==0 && is_valid_int(*words[i])){
-			bytes = (int)*words[i];
-		}
-		else if(i==0)
-		{
-			message="The first Argument was not an amount of bytes.";
-			write(sock, message, strlen(message));
-		}
-		i++;
+    while ((read_size = recv(sock, client_message, 2000, 0)) > 0 ) {
+        while(strcmp(client_message,""))
+        {
+            puts(client_message);
+            words[i]=trennen(client_message);
+            if(i==0 && is_valid_int(*words[i])){
+                bytes = (int)*words[i];
+            }
+            else if(i==0)
+            {
+                message="The first Argument was not an amount of bytes.";
+                write(sock, message, strlen(message));
+            }
+            i++;
+        }
     }
-	
-	for(int j = 1; j<i; j++)
-	{
-		message=suchen(&words[j],bytes);
-		write(sock, message, strlen(message));
-	}
+    
+    for(int j = 1; j<i; j++)
+    {
+        message=suchen(&words[j],bytes);
+        write(sock, message, strlen(message));
+    }
 
     if (read_size == 0) {
         puts("Client disconnected");
