@@ -20,7 +20,7 @@ void ausgeben(char *);
 void trennen(char *);
 void suchen(char *);
 int anzahlBytes(void);
-int leseBytes(int);
+int leseBytes(int, FILE*);
 
 
 #endif /* EINLESEN_H_ */

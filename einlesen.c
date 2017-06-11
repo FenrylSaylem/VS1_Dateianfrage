@@ -57,14 +57,14 @@ void trennen(char *t) {
  */
 void suchen(char *ptr) {
 	FILE* dateiname;
-	int i = 0;
+	int n = 0;
 
-	i = 4;  //anzahlBytes();
+	n = 4;  //anzahlBytes();
 	printf("ausgabe: %s\n", ptr);
 	if ((dateiname = fopen(ptr, "r")) != NULL) {
 		printf("Datei existiert.\n");
-		printf("Die ersten %c Bytes: ", i);
-		leseBytes(i);
+		printf("Die ersten %c Bytes: ", n);
+		leseBytes(n, dateiname);
 	} else {
 		printf("Datei existiert nicht.\n");
 	}
@@ -85,18 +85,18 @@ int anzahlBytes(void) {
  *
  * @param a Anzahl der zu lesenden Bytes
  */
-int leseBytes(int a) {
-	char puffer[a];
-	FILE *quelle;
+int leseBytes(int n, FILE* quelle) {
+	char puffer[n];
+//	FILE *quelle;
 
-	quelle = fopen("test.txt", "r+b");
-	if (quelle != NULL) {
-		fread(&puffer, sizeof(char), a, quelle);
-	}
+//	quelle = fopen("test.txt", "r+t");
+//	if (quelle != NULL) {
+		fread(&puffer, sizeof(char), n, quelle);
+//	}
 
 	// a-1, sonst gibt er eine Stelle zu viel aus
-	for (int i = 1; i < a + 1; i++) {
-		printf("\nWert %d = %d\n", i, puffer[i]);
+	for (int i = 0; i < n; i++) {
+		printf("\nWert %d = %x\n", i+1, puffer[i]);
 	}
 	return 0;
 }
