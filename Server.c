@@ -127,12 +127,17 @@ char *suchen(char **ptr, int n) {
  *
  * @param *t Array mit String
  */
-char *trennen(char* t) {
+char *trennen(char t[],char *w[]) {
+    int i= 1;
     char *ptr;
     char trennzeichen[] = ",";
     ptr = strtok(t, "\n");
-    ptr = strtok(t, trennzeichen);
-    ptr = strtok(NULL, trennzeichen);
+    w[0] = strtok(t, trennzeichen);
+
+    while(w[i] != NULL) {
+        w[i] = strtok(NULL, trennzeichen);
+        i++;
+    }
 
     return ptr;
 }
@@ -194,7 +199,7 @@ void *connection_handler(void *socket_desc) {
         while(strcmp(client_message,""))
         {
 //            puts(client_message);
-            words[i]=trennen(&client_message);
+            trennen(client_message,&words[0]);
             if(i==0 && is_valid_int(*words[i])){
                 bytes = (int)*words[i];
             }
