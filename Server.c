@@ -129,9 +129,7 @@ char *suchen(char **ptr, int n) {
  */
 int trennen(char t[], char *w[]) {
     int i = 0;
-    char *ptr;
     char trennzeichen[] = ",";
-    ptr = strtok(t, "\n");
     w[0] = strtok(t, trennzeichen);
 
     while (w[i] != NULL) {
@@ -161,7 +159,7 @@ bool is_valid_int(char str) {
 
     // Check for non-digit chars in the rest of the stirng.
     //
-    while (str) {
+    while (str-2) {
         if (!isdigit(str))
             return false;
         else
