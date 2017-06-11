@@ -127,19 +127,19 @@ char *suchen(char **ptr, int n) {
  *
  * @param *t Array mit String
  */
-char *trennen(char t[],char *w[]) {
-    int i= 1;
+int trennen(char t[], char *w[]) {
+    int i = 0;
     char *ptr;
     char trennzeichen[] = ",";
     ptr = strtok(t, "\n");
     w[0] = strtok(t, trennzeichen);
 
-    while(w[i] != NULL) {
-        w[i] = strtok(NULL, trennzeichen);
+    while (w[i] != NULL) {
         i++;
+        w[i] = strtok(NULL, trennzeichen);
     }
 
-    return ptr;
+    return i;
 }
 
 /**
@@ -187,8 +187,8 @@ void *connection_handler(void *socket_desc) {
     char *words[100];
 //    FILE *fp;
 //    unsigned char test[10];
-    int i = 0;
     int bytes = 0;
+    int argumentCount = 0;
 
     //Send some messages to the client
     message = "Greetings! I am your connection handler\n What Files are you asking for, and how many Bytes shall be given? Split the arguments with a space, leading with the number of bytes.\n";
@@ -196,32 +196,19 @@ void *connection_handler(void *socket_desc) {
 
     //Receive a message from client, parse it and answer
     while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
-        while(strcmp(client_message,""))
-        {
-//            puts(client_message);
-            trennen(client_message,&words[0]);
-            if(i==0 && is_valid_int(*words[i])){
-                bytes = (int)*words[i];
-            }
-            else if(i==0)
-            {
-                message="The first Argument was not an amount of bytes.";
-                write(sock, message, strlen(message));
-            }
-            i++;
+
+        argumentCount = trennen(client_message, &words[0]);
+        if (is_valid_int(*words[0])) {
+            bytes = (int) *words[0];
+        } else {
+            message = "The first Argument was not an amount of bytes.";
+            write(sock, message, strlen(message));
         }
 
-//        words[i] = trennen(client_message);
-//        if (i == 0 && is_valid_int(*words[i])) {
-//            bytes = (int) *words[i];
-//        } else if (i == 0) {
-//            message = "The first Argument was not an amount of bytes.";
-//            write(sock, message, strlen(message));
-//        }
-//        i++;
+
     }
 
-    for (int j = 1; j < i; j++) {
+    for (int j = 1; j < argumentCount; j++) {
         message = suchen(&words[j], bytes);
         write(sock, message, strlen(message));
     }
