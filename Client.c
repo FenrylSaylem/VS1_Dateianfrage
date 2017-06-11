@@ -5,6 +5,7 @@
 #include<string.h>    //strlen
 #include<sys/socket.h>    //socket
 #include<arpa/inet.h> //inet_addr
+#include <unistd.h>
  
 int main(int argc , char *argv[])
 {
@@ -33,7 +34,7 @@ int main(int argc , char *argv[])
      
     puts("Connected\n");
      
-    //keep communicating with server
+    //nclude <unistd.h>keep communicating with server
     while(1)
     {
         printf("Enter message : ");
