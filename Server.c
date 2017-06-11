@@ -127,11 +127,12 @@ char *suchen(char **ptr, int n) {
  *
  * @param *t Array mit String
  */
-char *trennen(char *t) {
+char *trennen(char* t) {
     char *ptr;
-    char trennzeichen[] = " ";
+    char trennzeichen[] = ",";
     ptr = strtok(t, "\n");
     ptr = strtok(t, trennzeichen);
+    ptr = strtok(NULL, trennzeichen);
 
     return ptr;
 }
@@ -189,15 +190,30 @@ void *connection_handler(void *socket_desc) {
     write(sock, message, strlen(message));
 
     //Receive a message from client, parse it and answer
-    while ((read_size = recv(sock, client_message, 2000, 0)) > 0 && i < 5) {
-        words[i] = trennen(client_message);
-        if (i == 0 && is_valid_int(*words[i])) {
-            bytes = (int) *words[i];
-        } else if (i == 0) {
-            message = "The first Argument was not an amount of bytes.";
-            write(sock, message, strlen(message));
+    while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
+        while(strcmp(client_message,""))
+        {
+//            puts(client_message);
+            words[i]=trennen(&client_message);
+            if(i==0 && is_valid_int(*words[i])){
+                bytes = (int)*words[i];
+            }
+            else if(i==0)
+            {
+                message="The first Argument was not an amount of bytes.";
+                write(sock, message, strlen(message));
+            }
+            i++;
         }
-        i++;
+
+//        words[i] = trennen(client_message);
+//        if (i == 0 && is_valid_int(*words[i])) {
+//            bytes = (int) *words[i];
+//        } else if (i == 0) {
+//            message = "The first Argument was not an amount of bytes.";
+//            write(sock, message, strlen(message));
+//        }
+//        i++;
     }
 
     for (int j = 1; j < i; j++) {
