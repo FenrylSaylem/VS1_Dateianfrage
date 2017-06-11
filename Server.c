@@ -1,5 +1,9 @@
-/*
-    C socket server example, handles multiple clients using threads
+/**
+ *  Server.c
+ *
+ *  Created on: 11.06.2017
+ *
+ *  creates a Server with Socket, that delivers a list of files and send n bytes of files to a client
 */
 
 #include<stdio.h>
@@ -60,7 +64,7 @@ int main(int argc, char *argv[]) {
 
         if (pthread_create(&sniffer_thread, NULL, connection_handler, (void *) new_sock) < 0) {
             perror("could not create thread");
-            return 1;
+            exit(EXIT_FAILURE);
         }
 
         //Now join the thread , so that we dont terminate before the thread
@@ -84,13 +88,13 @@ void *connection_handler(void *socket_desc) {
     int sock = *(int *) socket_desc;
     int read_size;
     char *message, client_message[2000];
-    char *aPtr;
-    char *buffer;
-    char *words;
-    FILE *fp;
-    unsigned char test[10];
-    int i = 0;
-    int count = 0;
+//    char *aPtr;
+//    char *buffer;
+//    char *words;
+//    FILE *fp;
+//    unsigned char test[10];
+//    int i = 0;
+//    int count = 0;
 
     //Send some messages to the client
     message = "Greetings! I am your connection handler\n";

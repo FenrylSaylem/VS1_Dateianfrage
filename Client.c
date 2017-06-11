@@ -1,12 +1,14 @@
-/*
-    C client using sockets
-
+/**
+ *  C client using sockets
+ *
 */
+
 #include<stdio.h> //printf
 #include<stdlib.h> //EXIT_FAILURE
 #include<string.h>    //strlen
 #include<sys/socket.h>    //socket
 #include<arpa/inet.h> //inet_addr
+#include<zconf.h> //close
 
 int main(int argc, char *argv[]) {
     int sock;
@@ -18,8 +20,9 @@ int main(int argc, char *argv[]) {
     if (sock == -1) {
         perror("Could not create socket");
         exit(EXIT_FAILURE);
+    } else {
+        puts("Socket created");
     }
-    puts("Socket created");
 
     server.sin_addr.s_addr = inet_addr("127.0.0.1");
     server.sin_family = AF_INET;
@@ -46,7 +49,7 @@ int main(int argc, char *argv[]) {
 
         //Receive a reply from the server
         if (recv(sock, server_reply, 2000, 0) < 0) {
-            puts("recv failed");
+            perror("recv failed");
             break;
         }
 

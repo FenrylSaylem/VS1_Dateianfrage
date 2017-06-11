@@ -1,0 +1,51 @@
+\hypertarget{Server_8c}{}\section{Server.\+c File Reference}
+\label{Server_8c}\index{Server.\+c@{Server.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+Include dependency graph for Server.\+c\+:
+% FIG 0
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{Server_8c_acc74efdd29e34bab649ad665326edfe6}{M\+A\+X\+\_\+\+W\+O\+R\+DS}~5
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ \hyperlink{Server_8c_ad2706378d6eedf7692cb32fcdfb025b0}{connection\+\_\+handler} (void $\ast$)
+\item 
+int \hyperlink{Server_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{Server_8c_acc74efdd29e34bab649ad665326edfe6}\label{Server_8c_acc74efdd29e34bab649ad665326edfe6}} 
+\index{Server.\+c@{Server.\+c}!M\+A\+X\+\_\+\+W\+O\+R\+DS@{M\+A\+X\+\_\+\+W\+O\+R\+DS}}
+\index{M\+A\+X\+\_\+\+W\+O\+R\+DS@{M\+A\+X\+\_\+\+W\+O\+R\+DS}!Server.\+c@{Server.\+c}}
+\subsubsection{\texorpdfstring{M\+A\+X\+\_\+\+W\+O\+R\+DS}{MAX\_WORDS}}
+{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+W\+O\+R\+DS~5}
+
+\hyperlink{Server_8c}{Server.\+c}
+
+Created on\+: 11.\+06.\+2017
+
+creates a Server with Socket, that delivers a list of files and send n bytes of files to a client 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{Server_8c_ad2706378d6eedf7692cb32fcdfb025b0}\label{Server_8c_ad2706378d6eedf7692cb32fcdfb025b0}} 
+\index{Server.\+c@{Server.\+c}!connection\+\_\+handler@{connection\+\_\+handler}}
+\index{connection\+\_\+handler@{connection\+\_\+handler}!Server.\+c@{Server.\+c}}
+\subsubsection{\texorpdfstring{connection\+\_\+handler()}{connection\_handler()}}
+{\footnotesize\ttfamily void $\ast$ connection\+\_\+handler (\begin{DoxyParamCaption}\item[{void $\ast$}]{socket\+\_\+desc }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{Server_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{Server_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{Server.\+c@{Server.\+c}!main@{main}}
+\index{main@{main}!Server.\+c@{Server.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+

@@ -1,0 +1,104 @@
+\hypertarget{einlesen_8c}{}\section{einlesen.\+c File Reference}
+\label{einlesen_8c}\index{einlesen.\+c@{einlesen.\+c}}
+{\ttfamily \#include \char`\"{}einlesen.\+h\char`\"{}}\newline
+Include dependency graph for einlesen.\+c\+:
+% FIG 0
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{einlesen_8c_af1f649f52fe9951df1b10ce2e7801153}{einlesen} (char $\ast$t)
+\item 
+void \hyperlink{einlesen_8c_a90d163d33ef601dee049c6b39e826999}{ausgeben} (char $\ast$t)
+\item 
+void \hyperlink{einlesen_8c_a05225627bbd1e832f3b76ba81b1f32b2}{trennen} (char $\ast$t)
+\item 
+void \hyperlink{einlesen_8c_a46b4157170e2d276a79544e7e9ed3840}{suchen} (char $\ast$ptr)
+\item 
+int \hyperlink{einlesen_8c_a298f1acf326a69e473948403637f66a7}{anzahl\+Bytes} (void)
+\item 
+int \hyperlink{einlesen_8c_a43b5ddf3b1d37991bdf8e367ffdce6b3}{lese\+Bytes} (int n, F\+I\+LE $\ast$quelle)
+\item 
+int \hyperlink{einlesen_8c_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{einlesen_8c_a298f1acf326a69e473948403637f66a7}\label{einlesen_8c_a298f1acf326a69e473948403637f66a7}} 
+\index{einlesen.\+c@{einlesen.\+c}!anzahl\+Bytes@{anzahl\+Bytes}}
+\index{anzahl\+Bytes@{anzahl\+Bytes}!einlesen.\+c@{einlesen.\+c}}
+\subsubsection{\texorpdfstring{anzahl\+Bytes()}{anzahlBytes()}}
+{\footnotesize\ttfamily int anzahl\+Bytes (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+liest die Anzahl an Bytes vom Benutzer ein \mbox{\Hypertarget{einlesen_8c_a90d163d33ef601dee049c6b39e826999}\label{einlesen_8c_a90d163d33ef601dee049c6b39e826999}} 
+\index{einlesen.\+c@{einlesen.\+c}!ausgeben@{ausgeben}}
+\index{ausgeben@{ausgeben}!einlesen.\+c@{einlesen.\+c}}
+\subsubsection{\texorpdfstring{ausgeben()}{ausgeben()}}
+{\footnotesize\ttfamily void ausgeben (\begin{DoxyParamCaption}\item[{char $\ast$}]{t }\end{DoxyParamCaption})}
+
+ausgeben der Benutzereingaben
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$t} & Array \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{einlesen_8c_af1f649f52fe9951df1b10ce2e7801153}\label{einlesen_8c_af1f649f52fe9951df1b10ce2e7801153}} 
+\index{einlesen.\+c@{einlesen.\+c}!einlesen@{einlesen}}
+\index{einlesen@{einlesen}!einlesen.\+c@{einlesen.\+c}}
+\subsubsection{\texorpdfstring{einlesen()}{einlesen()}}
+{\footnotesize\ttfamily int einlesen (\begin{DoxyParamCaption}\item[{char $\ast$}]{t }\end{DoxyParamCaption})}
+
+\hyperlink{einlesen_8c}{einlesen.\+c}
+
+liest Dateinamen von Benutzer teilt den String prueft ob Datei existiert oeffnet datei und liest erste vier bytes einlesen der Dateinamen in einem String
+
+
+\begin{DoxyParams}{Parameters}
+{\em t\mbox{[}$\,$\mbox{]}} & Array \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{einlesen_8c_a43b5ddf3b1d37991bdf8e367ffdce6b3}\label{einlesen_8c_a43b5ddf3b1d37991bdf8e367ffdce6b3}} 
+\index{einlesen.\+c@{einlesen.\+c}!lese\+Bytes@{lese\+Bytes}}
+\index{lese\+Bytes@{lese\+Bytes}!einlesen.\+c@{einlesen.\+c}}
+\subsubsection{\texorpdfstring{lese\+Bytes()}{leseBytes()}}
+{\footnotesize\ttfamily int lese\+Bytes (\begin{DoxyParamCaption}\item[{int}]{n,  }\item[{F\+I\+LE $\ast$}]{quelle }\end{DoxyParamCaption})}
+
+liest die ersten Bytes
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & Anzahl der zu lesenden Bytes \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{einlesen_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{einlesen_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{einlesen.\+c@{einlesen.\+c}!main@{main}}
+\index{main@{main}!einlesen.\+c@{einlesen.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{einlesen_8c_a46b4157170e2d276a79544e7e9ed3840}\label{einlesen_8c_a46b4157170e2d276a79544e7e9ed3840}} 
+\index{einlesen.\+c@{einlesen.\+c}!suchen@{suchen}}
+\index{suchen@{suchen}!einlesen.\+c@{einlesen.\+c}}
+\subsubsection{\texorpdfstring{suchen()}{suchen()}}
+{\footnotesize\ttfamily void suchen (\begin{DoxyParamCaption}\item[{char $\ast$}]{ptr }\end{DoxyParamCaption})}
+
+sucht ob Datei existiert wenn ja oeffne und lese ersten 4 Bytes
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$ptr} & Pointer auf Teilstring \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{einlesen_8c_a05225627bbd1e832f3b76ba81b1f32b2}\label{einlesen_8c_a05225627bbd1e832f3b76ba81b1f32b2}} 
+\index{einlesen.\+c@{einlesen.\+c}!trennen@{trennen}}
+\index{trennen@{trennen}!einlesen.\+c@{einlesen.\+c}}
+\subsubsection{\texorpdfstring{trennen()}{trennen()}}
+{\footnotesize\ttfamily void trennen (\begin{DoxyParamCaption}\item[{char $\ast$}]{t }\end{DoxyParamCaption})}
+
+trennt den String an jedem leerzeichen schneidet \textquotesingle{}/n\textquotesingle{} am schluss ab
+
+
+\begin{DoxyParams}{Parameters}
+{\em $\ast$t} & Array mit String \\
+\hline
+\end{DoxyParams}
