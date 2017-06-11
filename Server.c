@@ -103,6 +103,7 @@ void *connection_handler(void *socket_desc) {
 //    int i = 0;
 //    int count = 0;
 
+
     //Send some messages to the client
     message = "Greetings! I am your connection handler\n";
     write(sock, message, strlen(message));

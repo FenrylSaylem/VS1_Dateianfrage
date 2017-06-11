@@ -9,7 +9,7 @@
 #include<string.h>    //strlen
 #include<sys/socket.h>    //socket
 #include<arpa/inet.h> //inet_addr
-#include<zconf.h> //close
+#include <unistd.h> //close
 
 /**
  * Creates a socket and connects to a server
