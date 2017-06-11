@@ -19,7 +19,7 @@
 //the thread function
 void *connection_handler(void *);
 
-int main(int argc, char *argv[]) {
+int main(void) {
     int socket_desc, client_sock, c, *new_sock;
     struct sockaddr_in server, client;
 
