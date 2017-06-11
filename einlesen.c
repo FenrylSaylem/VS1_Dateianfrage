@@ -44,8 +44,6 @@ void trennen(char *t) {
 	while (ptr != NULL) {
 		suchen(ptr);
 		ptr = strtok(NULL, trennzeichen);
-		//int anzahl = sizeof(ptr);
-		//printf("Anzahl Einheiten im Array: %d", anzahl);
 	}
 }
 
@@ -59,7 +57,7 @@ void suchen(char *ptr) {
 	FILE* dateiname;
 	int n = 0;
 
-	n = 4;  //anzahlBytes();
+	n = anzahlBytes();
 	printf("ausgabe: %s\n", ptr);
 	if ((dateiname = fopen(ptr, "r")) != NULL) {
 		printf("Datei existiert.\n");
@@ -74,10 +72,15 @@ void suchen(char *ptr) {
  * liest die Anzahl an Bytes vom Benutzer ein
  */
 int anzahlBytes(void) {
-	int i = 0;
-	printf("Geben Sie die Anzahl an Bytes an: ");
-	i = (getchar() / 8);
-	return i;
+	int n = 0;
+
+		do {
+			printf("Geben Sie die Anzahl an Bytes an: ");
+			scanf("%d", &n);
+		} while (n < 1 || n > 10);
+
+//	n = n / 8;
+	return n;
 }
 
 /**
@@ -87,14 +90,9 @@ int anzahlBytes(void) {
  */
 int leseBytes(int n, FILE* quelle) {
 	char puffer[n];
-//	FILE *quelle;
 
-//	quelle = fopen("test.txt", "r+t");
-//	if (quelle != NULL) {
 		fread(&puffer, sizeof(char), n, quelle);
-//	}
 
-	// a-1, sonst gibt er eine Stelle zu viel aus
 	for (int i = 0; i < n; i++) {
 		printf("\nWert %d = %x\n", i+1, puffer[i]);
 	}
