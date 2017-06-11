@@ -22,7 +22,8 @@ int main(int argc, char *argv[]) {
     //Create socket
     socket_desc = socket(AF_INET, SOCK_STREAM, 0);
     if (socket_desc == -1) {
-        printf("Could not create socket");
+        perror("Could not create socket");
+        exit(EXIT_FAILURE);
     }
     puts("Socket created");
 

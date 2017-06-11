@@ -3,6 +3,7 @@
 
 */
 #include<stdio.h> //printf
+#include<stdlib.h> //EXIT_FAILURE
 #include<string.h>    //strlen
 #include<sys/socket.h>    //socket
 #include<arpa/inet.h> //inet_addr
@@ -15,7 +16,8 @@ int main(int argc, char *argv[]) {
     //Create socket
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock == -1) {
-        printf("Could not create socket");
+        perror("Could not create socket");
+        exit(EXIT_FAILURE);
     }
     puts("Socket created");
 
@@ -26,7 +28,7 @@ int main(int argc, char *argv[]) {
     //Connect to remote server
     if (connect(sock, (struct sockaddr *) &server, sizeof(server)) < 0) {
         perror("connect failed. Error");
-        return 1;
+        exit(EXIT_FAILURE);
     }
 
     puts("Connected\n");
@@ -38,8 +40,8 @@ int main(int argc, char *argv[]) {
 
         //Send some data
         if (send(sock, message, strlen(message), 0) < 0) {
-            puts("Send failed");
-            return 1;
+            perror("Send failed");
+            exit(EXIT_FAILURE);
         }
 
         //Receive a reply from the server
