@@ -76,7 +76,7 @@ int anzahlBytes(void) {
 	int n = 0;
 
 		do {
-			printf("Geben Sie die Anzahl an Bytes an: ");
+			printf("Geben Sie die Anzahl an Bytes an(1 - 10): ");
 			scanf("%d", &n);
 		} while (n < 1 || n > 10);
 
