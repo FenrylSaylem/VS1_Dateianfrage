@@ -127,6 +127,7 @@ char *leseBytes(int n, FILE *quelle) {
         case 8: sprintf(str, "%c%c%c%c%c%c%c%c", puffer[0],puffer[1],puffer[2],puffer[3],puffer[4],puffer[5],puffer[6],puffer[7]); break;
         case 9: sprintf(str, "%c%c%c%c%c%c%c%c%c", puffer[0],puffer[1],puffer[2],puffer[3],puffer[4],puffer[5],puffer[6],puffer[7],puffer[8]); break;
         case 10: sprintf(str, "%c%c%c%c%c%c%c%c%c%c", puffer[0],puffer[1],puffer[2],puffer[3],puffer[4],puffer[5],puffer[6],puffer[7],puffer[8],puffer[9]); break;
+        default: sprintf(str, "Zu viele Bytes");
     }
 
     return str;
