@@ -14,7 +14,7 @@
 #include<stdbool.h>
 #include<ctype.h>
 
-#define MAX_WORDS 5
+#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
 //the thread function
 void *connection_handler(void *);
@@ -86,15 +86,16 @@ int main(void) {
     return 0;
 }
 
-
 /**
  * Fügt einen Char an
  */
-void append(char* s, char c)
-{
-        int len = strlen(s);
-        s[len] = c;
-        s[len+1] = '\0';
+void append(char *str, char c) {
+    size_t len = strlen(str);
+    char *str2 = malloc(len + 1 + 1);
+    strcpy(str2, str);
+    str2[len] = c;
+    str2[len + 1] = '\0';
+
 }
 
 /**
@@ -105,33 +106,67 @@ void append(char* s, char c)
 char *leseBytes(int n, FILE *quelle) {
     char puffer[n];
     char *msg = "";
+    char *str = malloc(sizeof(char) * n);
 
     fread(&puffer, sizeof(char), n, quelle);
 
-    for (int i = 0; i < n-1; i++) {
-        puts("appendTEST");
-        append(msg,puffer[i]);
+    for (int i = 0; i < n - 1; i++) {
+        append(msg, puffer[i]);
     }
-    return msg;
+
+    switch (n) {
+        case 1:
+            sprintf(str, "%c\n\n", puffer[0]);
+            break;
+        case 2:
+            sprintf(str, "%c%c\n\n", puffer[0], puffer[1]);
+            break;
+        case 3:
+            sprintf(str, "%c%c%c\n\n", puffer[0], puffer[1], puffer[2]);
+            break;
+        case 4:
+            sprintf(str, "%c%c%c%c\n\n", puffer[0], puffer[1], puffer[2], puffer[3]);
+            break;
+        case 5:
+            sprintf(str, "%c%c%c%c%c\n\n", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4]);
+            break;
+        case 6:
+            sprintf(str, "%c%c%c%c%c%c\n\n", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5]);
+            break;
+        case 7:
+            sprintf(str, "%c%c%c%c%c%c%c\n\n", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5], puffer[6]);
+            break;
+        case 8:
+            sprintf(str, "%c%c%c%c%c%c%c%c\n\n", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5],
+                    puffer[6], puffer[7]);
+            break;
+        case 9:
+            sprintf(str, "%c%c%c%c%c%c%c%c%c\n\n", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5],
+                    puffer[6], puffer[7], puffer[8]);
+            break;
+        case 10:
+            sprintf(str, "%c%c%c%c%c%c%c%c%c%c\n\n", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5],
+                    puffer[6], puffer[7], puffer[8], puffer[9]);
+            break;
+        default:
+            sprintf(str, "Zu viele oder zu wenige Bytes\n");
+    }
+
+    return str;
 }
 
 /**
  * sucht ob Datei existiert
- * wenn ja oeffne
+ * wenn ja oeffne und lese ersten 4 Bytes
  *
- * @param **ptr Pointer auf Teilstring
+ * @param ptr Pointer auf Teilstring
  * @param n Anzahl der Bytes
  */
 char *suchen(char **ptr, int n) {
-    FILE* dateiname;
+    FILE *dateiname;
 
     if ((dateiname = fopen(*ptr, "r")) != NULL) {
-        puts("test");
-        char* message;
-
-        message=strcat("Datei existiert.\n Die angeforderten Bytes:", leseBytes(n, dateiname));
-
-        return message;
+        return leseBytes(n, dateiname);
     } else {
         return "Datei existiert nicht.\n";
     }
@@ -141,16 +176,14 @@ char *suchen(char **ptr, int n) {
  * trennt den String an jedem leerzeichen
  * schneidet '/n' am schluss ab
  *
- * @param *t Array mit String
+ * @param t Array mit String
  */
-int trennen(char t[],char *w[]) {
-    int i= 0;
-    char *ptr;
+int trennen(char t[], char *w[]) {
+    int i = 0;
     char trennzeichen[] = ",";
-    ptr = strtok(t, "\n");
     w[0] = strtok(t, trennzeichen);
 
-    while(w[i] != NULL) {
+    while (w[i] != NULL) {
         i++;
         w[i] = strtok(NULL, trennzeichen);
     }
@@ -190,61 +223,56 @@ bool is_valid_int(char str) {
 /**
  * Connection handler serves data for each client connection
  *
- * @param *socket_desc socket connection to client
+ * @param socket_desc socket connection to client
  *
  * */
 void *connection_handler(void *socket_desc) {
     //Get the socket descriptor
     int sock = *(int *) socket_desc;
     int read_size;
-    char *message, client_message[2000];
-//    char *aPtr;
-//    char *buffer;
+    char *message, client_message[2000];;
     char *words[100];
-//    FILE *fp;
-//    unsigned char test[10];
     int bytes = 0;
-
-    //Send some messages to the client
-    message = "Greetings! I am your connection handler\n What Files are you asking for, and how many Bytes shall be given? Split the arguments with a space, leading with the number of bytes.\n";
-    write(sock, message, strlen(message));
+    int argumentCount = 0;
 
     //Receive a message from client, parse it and answer
     while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
 
-//          puts(client_message);
-            int zaehler = trennen(client_message,&words[0]);
-            if(!is_valid_int(*words[0])){
-                bytes = atoi(words[0]);
+        argumentCount = trennen(client_message, &words[0]);
+        if (!is_valid_int(*words[0])) {
+            bytes = atoi(words[0]);
+            if((bytes<1 || bytes > 10) && !is_valid_int(*words[0])) {
+                message = "The first Argument was too high or too low.\n";
+                write(sock, message, strlen(message));
+            }
+            else if(argumentCount>6 || argumentCount<2)
+            {
+                message = "There were too many or too few Files given.\n";
+                write(sock, message, strlen(message));
             }
             else
             {
-                message="\nThe first Argument was not an amount of bytes.\n";
-                write(sock, message, strlen(message));
-            }
-            for (int j = 1; j < zaehler; j++) {
-                message = suchen(&words[j], bytes);
-                write(sock, message, strlen(message));
-            }
-//        words[i] = trennen(client_message);
-//        if (i == 0 && is_valid_int(*words[i])) {
-//            bytes = (int) *words[i];
-//        } else if (i == 0) {
-//            message = "The first Argument was not an amount of bytes.";
-//            write(sock, message, strlen(message));
-//        }
-//        i++;
+                for (int j = 1; j < argumentCount; j++) {
+                    message = suchen(&words[j], bytes);
+                    write(sock, suchen(&words[j], bytes), strlen(message));
+                }
+            }    
+        }    
+        else
+        {
+            message = "The first Argument was not an amount of bytes.\n";
+            write(sock, message, strlen(message));    
+        }
+
+        if (read_size == 0) {
+            puts("Client disconnected");
+            fflush(stdout);
+        } else if (read_size == -1) {
+            perror("recv failed");
+        }
+
+        //Free the socket pointer
+        free(socket_desc);
     }
-
-    if (read_size == 0) {
-        puts("Client disconnected");
-        fflush(stdout);
-    } else if (read_size == -1) {
-        perror("recv failed");
-    }
-
-    //Free the socket pointer
-    free(socket_desc);
-
     return 0;
 }
