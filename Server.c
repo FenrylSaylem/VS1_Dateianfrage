@@ -14,6 +14,7 @@
 #include<stdbool.h>
 #include<ctype.h>
 
+#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
 //the thread function
 void *connection_handler(void *);
@@ -105,12 +106,11 @@ void append(char *str, char c) {
 char *leseBytes(int n, FILE *quelle) {
     char puffer[n];
     char *msg = "";
-    char str[n];
+    char *str = malloc(sizeof(char) * n);
 
     fread(&puffer, sizeof(char), n, quelle);
 
     for (int i = 0; i < n - 1; i++) {
-        puts("appendTEST");
         append(msg, puffer[i]);
     }
 
@@ -149,9 +149,8 @@ char *leseBytes(int n, FILE *quelle) {
                     puffer[6], puffer[7], puffer[8], puffer[9]);
             break;
         default:
-            sprintf(str, "Zu viele Bytes");
+            sprintf(str, "Zu viele Bytes oder zu wenige Bytes\n");
     }
-
     return str;
 }
 
@@ -231,36 +230,34 @@ void *connection_handler(void *socket_desc) {
     int sock = *(int *) socket_desc;
     int read_size;
     char *message, client_message[2000];
-//    char *aPtr;
-//    char *buffer;
     char *words[100];
-//    FILE *fp;
-//    unsigned char test[10];
     int bytes = 0;
     int argumentCount = 0;
 
-    //Send some messages to the client
-    message = "Greetings! I am your connection handler\n What Files are you asking for, and how many Bytes shall be given? Split the arguments with a space, leading with the number of bytes.\n";
-    write(sock, message, strlen(message));
-
     //Receive a message from client, parse it and answer
     while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
-
         argumentCount = trennen(client_message, &words[0]);
         if (!is_valid_int(*words[0])) {
             bytes = atoi(words[0]);
+            if ((bytes < 1 || bytes > 10) && !is_valid_int(*words[0])) {
+                message = "The first Argument was too high, too low or not a number.\n";
+                write(sock, message, strlen(message));
+            } else if (argumentCount > 6 || argumentCount < 2) {
+                message = "There were too many or too few Files given.\n";
+                write(sock, message, strlen(message));
+            } else {
+                for (int j = 1; j < argumentCount; j++) {
+                    message = suchen(&words[j], bytes);
+                    write(sock, suchen(&words[j], bytes), strlen(message));
+                }
+            }
         } else {
-            message = "The first Argument was not an amount of bytes.";
+            message = "The first Argument was not an amount of bytes.\n";
             write(sock, message, strlen(message));
         }
-
-
-        for (int j = 1; j < argumentCount; j++) {
-            message = suchen(&words[j], bytes);
-            write(sock, suchen(&words[j], bytes), strlen(message));
-        }
+        message = "";
+        memset(&client_message[0], 0, sizeof(client_message));
     }
-
     if (read_size == 0) {
         puts("Client disconnected");
         fflush(stdout);
@@ -270,6 +267,5 @@ void *connection_handler(void *socket_desc) {
 
     //Free the socket pointer
     free(socket_desc);
-
     return 0;
 }
