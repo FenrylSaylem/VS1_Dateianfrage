@@ -264,16 +264,15 @@ void *connection_handler(void *socket_desc) {
             message = "The first Argument was not an amount of bytes.\n";
             write(sock, message, strlen(message));    
         }
-
-        if (read_size == 0) {
-            puts("Client disconnected");
-            fflush(stdout);
-        } else if (read_size == -1) {
-            perror("recv failed");
-        }
-
-        //Free the socket pointer
-        free(socket_desc);
+    }    
+    if (read_size == 0) {
+        puts("Client disconnected");
+        fflush(stdout);
+    } else if (read_size == -1) {
+        perror("recv failed");
     }
+
+    //Free the socket pointer
+    free(socket_desc);
     return 0;
 }
