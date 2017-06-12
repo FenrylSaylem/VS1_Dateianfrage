@@ -13,4 +13,4 @@ client:Client.c
 		$(C) $(CFLAGS) $^ -o $@
 
 clean:
-rm	-rf $(BIN) $(OBJ)
+	rm -rf $(BIN) $(OBJ)
