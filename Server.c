@@ -7,11 +7,11 @@
 #include<stdio.h>
 #include<string.h>    //strlen
 #include<stdlib.h>    //strlen
-#include<stdbool.h>
 #include<sys/socket.h>
 #include<arpa/inet.h> //inet_addr
 #include<unistd.h>    //write
 #include<pthread.h> //for threading , link with lpthread
+#include<stdbool.h>
 #include<ctype.h>
 
 #define MAX_WORDS 5
@@ -61,7 +61,7 @@ int main(void) {
     /*Accept and incoming connection
     puts("Waiting for incoming connections...");
     c = sizeof(struct sockaddr_in);*/
-    while ((client_sock = accept(socket_desc, (struct sockaddr *) &client, (socklen_t * ) & c))) {
+    while ((client_sock = accept(socket_desc, (struct sockaddr *) &client, (socklen_t *) &c))) {
         puts("Connection accepted");
 
         pthread_t sniffer_thread;
@@ -86,20 +86,31 @@ int main(void) {
     return 0;
 }
 
+
+/**
+ * Fügt einen Char an
+ */
+void append(char* s, char c)
+{
+        int len = strlen(s);
+        s[len] = c;
+        s[len+1] = '\0';
+}
+
 /**
  * liest die ersten Bytes
  *
  * @param a Anzahl der zu lesenden Bytes
  */
-char* leseBytes(int n, FILE* quelle) {
+char *leseBytes(int n, FILE *quelle) {
     char puffer[n];
-    char *msg="";
+    char *msg = "";
 
-        fread(&puffer, sizeof(char), n, quelle);
+    fread(&puffer, sizeof(char), n, quelle);
 
     for (int i = 0; i < n; i++) {
-        
-        msg=msg+puffer[i];
+
+        append(msg,puffer[i]);
     }
     return msg;
 }
@@ -108,10 +119,11 @@ char* leseBytes(int n, FILE* quelle) {
  * sucht ob Datei existiert
  * wenn ja oeffne und lese ersten 4 Bytes
  *
- * @param *ptr Pointer auf Teilstring
+ * @param **ptr Pointer auf Teilstring
+ * @param n Anzahl der Bytes
  */
-char* suchen(char **ptr, int n) {
-    FILE* dateiname;
+char *suchen(char **ptr, int n) {
+    FILE *dateiname;
 
     if ((dateiname = fopen(*ptr, "r")) != NULL) {
         return strcat("Datei existiert.\n Die angeforderten Bytes:", leseBytes(n, dateiname));
@@ -126,45 +138,54 @@ char* suchen(char **ptr, int n) {
  *
  * @param *t Array mit String
  */
-char* trennen(char *t) {
+int trennen(char t[],char *w[]) {
+    int i= 0;
     char *ptr;
     char trennzeichen[] = ",";
     ptr = strtok(t, "\n");
-    ptr = strtok(t, trennzeichen);
-    puts(ptr);
-    return ptr;
+    w[0] = strtok(t, trennzeichen);
+
+    while(w[i] != NULL) {
+        i++;
+        w[i] = strtok(NULL, trennzeichen);
+    }
+
+    return i;
 }
 
+/**
+ * prüft einen string ob er nur Zahlen enthält
+ *
+ * @param str zu prüfender String
+ * @return  true or false
+ */
+bool is_valid_int(char str) {
+    // Handle negative numbers.
+    //
+    if (str == '-')
+        ++str;
 
-bool is_valid_int(char str)
-{
-   // Handle negative numbers.
-   //
-   if (str == '-')
-      ++str;
+    // Handle empty string or just "-".
+    //
+    if (!str)
+        return false;
 
-   // Handle empty string or just "-".
-   //
-   if (!str)
-      return false;
+    // Check for non-digit chars in the rest of the stirng.
+    //
+    while (str) {
+        if (!isdigit(str))
+            return false;
+        else
+            ++str;
+    }
 
-   // Check for non-digit chars in the rest of the stirng.
-   //
-   while (str)
-   {
-      if (!isdigit(str))
-         return false;
-      else
-         ++str;
-   }
-
-   return true;
+    return true;
 }
 
 /**
  * Connection handler serves data for each client connection
  *
- * @param socket_desc socket connection to client
+ * @param *socket_desc socket connection to client
  *
  * */
 void *connection_handler(void *socket_desc) {
@@ -174,38 +195,40 @@ void *connection_handler(void *socket_desc) {
     char *message, client_message[2000];
 //    char *aPtr;
 //    char *buffer;
-      char *words[100];
+    char *words[100];
 //    FILE *fp;
 //    unsigned char test[10];
-      int i = 0;
-      int bytes = 0;
+    int bytes = 0;
 
     //Send some messages to the client
-    message = "Greetings! I am your connection handler\n What Files are you asking for, and how many Bytes shall be given? Split the arguments with a comma, leading with the number of bytes.\n";
+    message = "Greetings! I am your connection handler\n What Files are you asking for, and how many Bytes shall be given? Split the arguments with a space, leading with the number of bytes.\n";
     write(sock, message, strlen(message));
 
     //Receive a message from client, parse it and answer
-    while ((read_size = recv(sock, client_message, 2000, 0)) > 0 ) {
-        while(strcmp(client_message,""))
-        {
-            puts(client_message);
-            words[i]=trennen(client_message);
-            if(i==0 && is_valid_int(*words[i])){
-                bytes = (int)*words[i];
+    while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
+
+//          puts(client_message);
+            int zaehler = trennen(client_message,&words[0]);
+            if(!is_valid_int(*words[0])){
+                bytes = (int)*words[0];
             }
-            else if(i==0)
+            else
             {
-                message="The first Argument was not an amount of bytes.";
+                message="\nThe first Argument was not an amount of bytes.\n";
                 write(sock, message, strlen(message));
             }
-            i++;
-        }
-    }
-    
-    for(int j = 1; j<i; j++)
-    {
-        message=suchen(&words[j],bytes);
-        write(sock, message, strlen(message));
+            for (int j = 1; j < zaehler; j++) {
+                message = suchen(&words[j], bytes);
+                write(sock, message, strlen(message));
+            }
+//        words[i] = trennen(client_message);
+//        if (i == 0 && is_valid_int(*words[i])) {
+//            bytes = (int) *words[i];
+//        } else if (i == 0) {
+//            message = "The first Argument was not an amount of bytes.";
+//            write(sock, message, strlen(message));
+//        }
+//        i++;
     }
 
     if (read_size == 0) {
