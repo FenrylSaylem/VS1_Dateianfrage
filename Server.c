@@ -151,9 +151,7 @@ char *leseBytes(int n, FILE *quelle) {
         default:
             sprintf(str, "Zu viele oder zu wenige Bytes\n");
     }
-    msg=str;
-    free(str);
-    return msg;
+    return str;
 }
 
 /**
@@ -238,12 +236,11 @@ void *connection_handler(void *socket_desc) {
 
     //Receive a message from client, parse it and answer
     while ((read_size = recv(sock, client_message, 2000, 0)) > 0) {
-
         argumentCount = trennen(client_message, &words[0]);
         if (!is_valid_int(*words[0])) {
             bytes = atoi(words[0]);
             if((bytes<1 || bytes > 10) && !is_valid_int(*words[0])) {
-                message = "The first Argument was too high or too low.\n";
+                message = "The first Argument was too high, too low or not a number.\n";
                 write(sock, message, strlen(message));
             }
             else if(argumentCount>6 || argumentCount<2)
@@ -264,6 +261,7 @@ void *connection_handler(void *socket_desc) {
             message = "The first Argument was not an amount of bytes.\n";
             write(sock, message, strlen(message));    
         }
+        message="";
     }    
     if (read_size == 0) {
         puts("Client disconnected");
