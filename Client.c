@@ -37,7 +37,8 @@ int main(int argc , char *argv[])
     //nclude <unistd.h>keep communicating with server
     while(1)
     {
-        printf("Enter message : ");
+        sleep(1);
+        printf("What Files are you asking for, and how many Bytes shall be given? Split the arguments with a comma, leading with the number of bytes.\n");
         scanf("%s" , message);
          
         //Send some data
