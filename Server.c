@@ -15,7 +15,6 @@
 #include<ctype.h>
 
 
-
 //the thread function
 void *connection_handler(void *);
 
@@ -89,13 +88,12 @@ int main(void) {
 /**
  * Fügt einen Char an
  */
-void append(char* str, char c)
-{
+void append(char *str, char c) {
     size_t len = strlen(str);
-    char *str2 = malloc(len + 1 + 1 );
-    strcpy(str2,str);
+    char *str2 = malloc(len + 1 + 1);
+    strcpy(str2, str);
     str2[len] = c;
-    str2[len + 1 ] = '\0';
+    str2[len + 1] = '\0';
 
 }
 
@@ -107,27 +105,51 @@ void append(char* str, char c)
 char *leseBytes(int n, FILE *quelle) {
     char puffer[n];
     char *msg = "";
-    char str[80];
+    char str[n];
 
     fread(&puffer, sizeof(char), n, quelle);
 
-    for (int i = 0; i < n-1; i++) {
+    for (int i = 0; i < n - 1; i++) {
         puts("appendTEST");
-        append(msg,puffer[i]);
+        append(msg, puffer[i]);
     }
 
-    switch(n){
-        case 1: sprintf(str, "%c", puffer[0]); break;
-        case 2: sprintf(str, "%c%c", puffer[0],puffer[1]); break;
-        case 3: sprintf(str, "%c%c%c", puffer[0],puffer[1],puffer[2]); break;
-        case 4: sprintf(str, "%c%c%c%c", puffer[0],puffer[1],puffer[2],puffer[3]); break;
-        case 5: sprintf(str, "%c%c%c%c%c", puffer[0],puffer[1],puffer[2],puffer[3],puffer[4]); break;
-        case 6: sprintf(str, "%c%c%c%c%c%c", puffer[0],puffer[1],puffer[2],puffer[3],puffer[4],puffer[5]); break;
-        case 7: sprintf(str, "%c%c%c%c%c%c%c", puffer[0],puffer[1],puffer[2],puffer[3],puffer[4],puffer[5],puffer[6]); break;
-        case 8: sprintf(str, "%c%c%c%c%c%c%c%c", puffer[0],puffer[1],puffer[2],puffer[3],puffer[4],puffer[5],puffer[6],puffer[7]); break;
-        case 9: sprintf(str, "%c%c%c%c%c%c%c%c%c", puffer[0],puffer[1],puffer[2],puffer[3],puffer[4],puffer[5],puffer[6],puffer[7],puffer[8]); break;
-        case 10: sprintf(str, "%c%c%c%c%c%c%c%c%c%c", puffer[0],puffer[1],puffer[2],puffer[3],puffer[4],puffer[5],puffer[6],puffer[7],puffer[8],puffer[9]); break;
-        default: sprintf(str, "Zu viele Bytes");
+    switch (n) {
+        case 1:
+            sprintf(str, "%c", puffer[0]);
+            break;
+        case 2:
+            sprintf(str, "%c%c", puffer[0], puffer[1]);
+            break;
+        case 3:
+            sprintf(str, "%c%c%c", puffer[0], puffer[1], puffer[2]);
+            break;
+        case 4:
+            sprintf(str, "%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3]);
+            break;
+        case 5:
+            sprintf(str, "%c%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4]);
+            break;
+        case 6:
+            sprintf(str, "%c%c%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5]);
+            break;
+        case 7:
+            sprintf(str, "%c%c%c%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5], puffer[6]);
+            break;
+        case 8:
+            sprintf(str, "%c%c%c%c%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5],
+                    puffer[6], puffer[7]);
+            break;
+        case 9:
+            sprintf(str, "%c%c%c%c%c%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5],
+                    puffer[6], puffer[7], puffer[8]);
+            break;
+        case 10:
+            sprintf(str, "%c%c%c%c%c%c%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5],
+                    puffer[6], puffer[7], puffer[8], puffer[9]);
+            break;
+        default:
+            sprintf(str, "Zu viele Bytes");
     }
 
     return str;
@@ -144,7 +166,7 @@ char *suchen(char **ptr, int n) {
     FILE *dateiname;
 
     if ((dateiname = fopen(*ptr, "r")) != NULL) {
-        return strcat("Datei existiert.\n Die angeforderten Bytes:", leseBytes(n, dateiname));
+        return leseBytes(n, dateiname);
     } else {
         return "Datei existiert nicht.\n";
     }
@@ -235,7 +257,7 @@ void *connection_handler(void *socket_desc) {
 
         for (int j = 1; j < argumentCount; j++) {
             message = suchen(&words[j], bytes);
-            write(sock, message, strlen(message));
+            write(sock, suchen(&words[j], bytes), strlen(message));
         }
     }
 
