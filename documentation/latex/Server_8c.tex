@@ -11,11 +11,6 @@
 {\ttfamily \#include $<$ctype.\+h$>$}\newline
 Include dependency graph for Server.\+c\+:
 % FIG 0
-\subsection*{Macros}
-\begin{DoxyCompactItemize}
-\item 
-\#define \hyperlink{Server_8c_acc74efdd29e34bab649ad665326edfe6}{M\+A\+X\+\_\+\+W\+O\+R\+DS}~5
-\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -23,39 +18,40 @@ void $\ast$ \hyperlink{Server_8c_ad2706378d6eedf7692cb32fcdfb025b0}{connection\+
 \item 
 int \hyperlink{Server_8c_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)
 \item 
+void \hyperlink{Server_8c_adaf0d4a810a7f78a84f52936ae4ec064}{append} (char $\ast$str, char c)
+\item 
 char $\ast$ \hyperlink{Server_8c_ada7b981846f9a620c78c8a3bbd9cd46f}{lese\+Bytes} (int n, F\+I\+LE $\ast$quelle)
 \item 
 char $\ast$ \hyperlink{Server_8c_a2959b7887c90f1593930d2b981ca0e39}{suchen} (char $\ast$$\ast$ptr, int n)
 \item 
-char $\ast$ \hyperlink{Server_8c_addd08d1c5490799098024a85fd847367}{trennen} (char $\ast$t)
+int \hyperlink{Server_8c_aaf7a73e26535eaa39bcbb2fcd5f7466c}{trennen} (char t\mbox{[}$\,$\mbox{]}, char $\ast$w\mbox{[}$\,$\mbox{]})
 \item 
 bool \hyperlink{Server_8c_a25107087bcd33c6cbafe1707dc1c8bd6}{is\+\_\+valid\+\_\+int} (char str)
 \end{DoxyCompactItemize}
 
 
-\subsection{Macro Definition Documentation}
-\mbox{\Hypertarget{Server_8c_acc74efdd29e34bab649ad665326edfe6}\label{Server_8c_acc74efdd29e34bab649ad665326edfe6}} 
-\index{Server.\+c@{Server.\+c}!M\+A\+X\+\_\+\+W\+O\+R\+DS@{M\+A\+X\+\_\+\+W\+O\+R\+DS}}
-\index{M\+A\+X\+\_\+\+W\+O\+R\+DS@{M\+A\+X\+\_\+\+W\+O\+R\+DS}!Server.\+c@{Server.\+c}}
-\subsubsection{\texorpdfstring{M\+A\+X\+\_\+\+W\+O\+R\+DS}{MAX\_WORDS}}
-{\footnotesize\ttfamily \#define M\+A\+X\+\_\+\+W\+O\+R\+DS~5}
-
-\hyperlink{Server_8c}{Server.\+c}
-
-creates a Server with Socket, that delivers a list of files and send n bytes of files to a client 
-
 \subsection{Function Documentation}
-\mbox{\Hypertarget{Server_8c_ad2706378d6eedf7692cb32fcdfb025b0}\label{Server_8c_ad2706378d6eedf7692cb32fcdfb025b0}} 
+\mbox{\Hypertarget{Server_8c_adaf0d4a810a7f78a84f52936ae4ec064}\label{Server_8c_adaf0d4a810a7f78a84f52936ae4ec064}} 
+\index{Server.\+c@{Server.\+c}!append@{append}}
+\index{append@{append}!Server.\+c@{Server.\+c}}
+\subsubsection{\texorpdfstring{append()}{append()}}
+{\footnotesize\ttfamily void append (\begin{DoxyParamCaption}\item[{char $\ast$}]{str,  }\item[{char}]{c }\end{DoxyParamCaption})}
+
+Fügt einen Char an \mbox{\Hypertarget{Server_8c_ad2706378d6eedf7692cb32fcdfb025b0}\label{Server_8c_ad2706378d6eedf7692cb32fcdfb025b0}} 
 \index{Server.\+c@{Server.\+c}!connection\+\_\+handler@{connection\+\_\+handler}}
 \index{connection\+\_\+handler@{connection\+\_\+handler}!Server.\+c@{Server.\+c}}
 \subsubsection{\texorpdfstring{connection\+\_\+handler()}{connection\_handler()}}
 {\footnotesize\ttfamily void $\ast$ connection\+\_\+handler (\begin{DoxyParamCaption}\item[{void $\ast$}]{socket\+\_\+desc }\end{DoxyParamCaption})}
 
+\hyperlink{Server_8c}{Server.\+c}
+
+creates a Server with Socket, that delivers a list of files and send n bytes of files to a client
+
 Connection handler serves data for each client connection
 
 
 \begin{DoxyParams}{Parameters}
-{\em $\ast$socket\+\_\+desc} & socket connection to client \\
+{\em socket\+\_\+desc} & socket connection to client \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{Server_8c_a25107087bcd33c6cbafe1707dc1c8bd6}\label{Server_8c_a25107087bcd33c6cbafe1707dc1c8bd6}} 
@@ -86,6 +82,8 @@ liest die ersten Bytes
 \begin{DoxyParams}{Parameters}
 {\em a} & Anzahl der zu lesenden Bytes \\
 \hline
+{\em quelle} & file pointer zur Datei asu der gelesen werden soll \\
+\hline
 \end{DoxyParams}
 \mbox{\Hypertarget{Server_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{Server_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
 \index{Server.\+c@{Server.\+c}!main@{main}}
@@ -108,21 +106,21 @@ sucht ob Datei existiert wenn ja oeffne und lese ersten 4 Bytes
 
 
 \begin{DoxyParams}{Parameters}
-{\em $\ast$$\ast$ptr} & Pointer auf Teilstring \\
+{\em ptr} & Pointer auf Teilstring \\
 \hline
 {\em n} & Anzahl der Bytes \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{Server_8c_addd08d1c5490799098024a85fd847367}\label{Server_8c_addd08d1c5490799098024a85fd847367}} 
+\mbox{\Hypertarget{Server_8c_aaf7a73e26535eaa39bcbb2fcd5f7466c}\label{Server_8c_aaf7a73e26535eaa39bcbb2fcd5f7466c}} 
 \index{Server.\+c@{Server.\+c}!trennen@{trennen}}
 \index{trennen@{trennen}!Server.\+c@{Server.\+c}}
 \subsubsection{\texorpdfstring{trennen()}{trennen()}}
-{\footnotesize\ttfamily char$\ast$ trennen (\begin{DoxyParamCaption}\item[{char $\ast$}]{t }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int trennen (\begin{DoxyParamCaption}\item[{char}]{t\mbox{[}$\,$\mbox{]},  }\item[{char $\ast$}]{w\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
 
 trennt den String an jedem leerzeichen schneidet \textquotesingle{}/n\textquotesingle{} am schluss ab
 
 
 \begin{DoxyParams}{Parameters}
-{\em $\ast$t} & Array mit String \\
+{\em t} & Array mit String \\
 \hline
 \end{DoxyParams}

@@ -14,7 +14,6 @@
 #include<stdbool.h>
 #include<ctype.h>
 
-#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
 //the thread function
 void *connection_handler(void *);
@@ -102,6 +101,7 @@ void append(char *str, char c) {
  * liest die ersten Bytes
  *
  * @param a Anzahl der zu lesenden Bytes
+ * @param quelle file pointer zur Datei asu der gelesen werden soll
  */
 char *leseBytes(int n, FILE *quelle) {
     char puffer[n];
@@ -248,7 +248,7 @@ void *connection_handler(void *socket_desc) {
             } else {
                 for (int j = 1; j < argumentCount; j++) {
                     message = suchen(&words[j], bytes);
-                    write(sock, suchen(&words[j], bytes), strlen(message));
+                    write(sock, message, strlen(message));
                 }
             }
         } else {
