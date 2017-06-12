@@ -116,36 +116,36 @@ char *leseBytes(int n, FILE *quelle) {
 
     switch (n) {
         case 1:
-            sprintf(str, "%c", puffer[0]);
+            sprintf(str, "%c\n", puffer[0]);
             break;
         case 2:
-            sprintf(str, "%c%c", puffer[0], puffer[1]);
+            sprintf(str, "%c%c\n", puffer[0], puffer[1]);
             break;
         case 3:
-            sprintf(str, "%c%c%c", puffer[0], puffer[1], puffer[2]);
+            sprintf(str, "%c%c%c\n", puffer[0], puffer[1], puffer[2]);
             break;
         case 4:
-            sprintf(str, "%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3]);
+            sprintf(str, "%c%c%c%c\n", puffer[0], puffer[1], puffer[2], puffer[3]);
             break;
         case 5:
-            sprintf(str, "%c%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4]);
+            sprintf(str, "%c%c%c%c%c\n", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4]);
             break;
         case 6:
-            sprintf(str, "%c%c%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5]);
+            sprintf(str, "%c%c%c%c%c%c\n", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5]);
             break;
         case 7:
-            sprintf(str, "%c%c%c%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5], puffer[6]);
+            sprintf(str, "%c%c%c%c%c%c%c\n", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5], puffer[6]);
             break;
         case 8:
-            sprintf(str, "%c%c%c%c%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5],
+            sprintf(str, "%c%c%c%c%c%c%c%c\n", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5],
                     puffer[6], puffer[7]);
             break;
         case 9:
-            sprintf(str, "%c%c%c%c%c%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5],
+            sprintf(str, "%c%c%c%c%c%c%c%c%c\n", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5],
                     puffer[6], puffer[7], puffer[8]);
             break;
         case 10:
-            sprintf(str, "%c%c%c%c%c%c%c%c%c%c", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5],
+            sprintf(str, "%c%c%c%c%c%c%c%c%c%c\n", puffer[0], puffer[1], puffer[2], puffer[3], puffer[4], puffer[5],
                     puffer[6], puffer[7], puffer[8], puffer[9]);
             break;
         default:
