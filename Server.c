@@ -229,7 +229,8 @@ void *connection_handler(void *socket_desc) {
     //Get the socket descriptor
     int sock = *(int *) socket_desc;
     int read_size;
-    char *message, client_message[2000];
+    char *message = "\0"; 
+	char client_message[2000];
     char *words[100];
     int bytes = 0;
     int argumentCount = 0;

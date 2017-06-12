@@ -63,8 +63,9 @@ int main(void) {
 
         puts("Server reply :");
         puts(server_reply);
+	memset(&server_reply[0], 0 ,sizeof(server_reply ));
     }
 
-    close(sock);
+   close(sock);
     return 0;
 }
