@@ -87,6 +87,19 @@ int main(void) {
 }
 
 /**
+ * Fügt einen Char an
+ */
+void append(char* str, char c)
+{
+    size_t len = strlen(str);
+    char *str2 = malloc(len + 1 + 1 );
+    strcpy(str2,str);
+    str2[len] = c;
+    str2[len + 1 ] = '\0';
+
+}
+
+/**
  * liest die ersten Bytes
  *
  * @param a Anzahl der zu lesenden Bytes
@@ -97,9 +110,9 @@ char *leseBytes(int n, FILE *quelle) {
 
     fread(&puffer, sizeof(char), n, quelle);
 
-    for (int i = 0; i < n; i++) {
-
-        msg = msg + puffer[i];
+    for (int i = 0; i < n-1; i++) {
+        puts("appendTEST");
+        append(msg,puffer[i]);
     }
     return msg;
 }
@@ -197,18 +210,17 @@ void *connection_handler(void *socket_desc) {
 
         argumentCount = trennen(client_message, &words[0]);
         if (!is_valid_int(*words[0])) {
-            bytes = (int) *words[0];
+            bytes = atoi(words[0]);
         } else {
             message = "The first Argument was not an amount of bytes.";
             write(sock, message, strlen(message));
         }
 
 
-    }
-
-    for (int j = 1; j < argumentCount; j++) {
-        message = suchen(&words[j], bytes);
-        write(sock, message, strlen(message));
+        for (int j = 1; j < argumentCount; j++) {
+            message = suchen(&words[j], bytes);
+            write(sock, message, strlen(message));
+        }
     }
 
     if (read_size == 0) {
