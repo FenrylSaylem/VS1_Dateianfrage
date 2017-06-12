@@ -108,8 +108,8 @@ char *leseBytes(int n, FILE *quelle) {
 
     fread(&puffer, sizeof(char), n, quelle);
 
-    for (int i = 0; i < n; i++) {
-
+    for (int i = 0; i < n-1; i++) {
+        puts("appendTEST");
         append(msg,puffer[i]);
     }
     return msg;
@@ -117,16 +117,21 @@ char *leseBytes(int n, FILE *quelle) {
 
 /**
  * sucht ob Datei existiert
- * wenn ja oeffne und lese ersten 4 Bytes
+ * wenn ja oeffne
  *
  * @param **ptr Pointer auf Teilstring
  * @param n Anzahl der Bytes
  */
 char *suchen(char **ptr, int n) {
-    FILE *dateiname;
+    FILE* dateiname;
 
     if ((dateiname = fopen(*ptr, "r")) != NULL) {
-        return strcat("Datei existiert.\n Die angeforderten Bytes:", leseBytes(n, dateiname));
+        puts("test");
+        char* message;
+
+        message=strcat("Datei existiert.\n Die angeforderten Bytes:", leseBytes(n, dateiname));
+
+        return message;
     } else {
         return "Datei existiert nicht.\n";
     }
@@ -210,7 +215,7 @@ void *connection_handler(void *socket_desc) {
 //          puts(client_message);
             int zaehler = trennen(client_message,&words[0]);
             if(!is_valid_int(*words[0])){
-                bytes = (int)*words[0];
+                bytes = atoi(words[0]);
             }
             else
             {
