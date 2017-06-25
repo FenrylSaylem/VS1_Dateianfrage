@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package calc_Inter;
+package Calc_Inter;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -18,22 +16,23 @@ public interface Calc_Inter extends Remote{
 
     /**
      *
+     */
+    //public static String[][] baeckerle;
+    
+    /**
+     *
      * @param n
      * @param m
      * @return
      * @throws java.rmi.RemoteException
      */
+    //public Calc_Impl(String quellDatei) throws RemoteException;
     public int add(int n, int m)throws RemoteException;
     public int sub(int n, int m)throws RemoteException;
     public int mul(int n, int m)throws RemoteException;
     public int div(int n, int m)throws RemoteException; 
     public String getString(String liste) throws RemoteException;
-
-    /**
-     *
-     * @param list
-     * @return
-     * @throws RemoteException
-     */
-    public BufferedReader getFilet(String list) throws RemoteException;
+    public String[] leseNamen(String text);
+    public String[][] leseZeilen(String text);
+    public void vergleicheNamen(String[] namen,String[][]liste);
 }
