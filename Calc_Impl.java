@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package calc_Impl;
+package Calc_Impl;
 
-import calc_Inter.Calc_Inter;
-//import static calc_Server.Calc_S.standardFile;
+import Calc_Inter.Calc_Inter;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
@@ -18,15 +18,22 @@ import java.util.logging.Logger;
  *
  * @author marc
  */
-public class Calc_Impl extends UnicastRemoteObject implements Calc_Inter{
+public class Calc_Impl extends UnicastRemoteObject implements Calc_Inter{    
+
+    /**
+     *
+     */
+    public static String[][] baeckerle;
     
     /**
      *
-     * @throws java.rmi.Remote
+     * @param quellDatei
      * @throws RemoteException
      */
-    public Calc_Impl() throws RemoteException{
-        
+    public Calc_Impl(String quellDatei) throws RemoteException{
+        String[][] array;
+        array = leseZeilen(quellDatei);
+        Calc_Impl.baeckerle=array;
     }
 
     /**
@@ -79,19 +86,90 @@ public class Calc_Impl extends UnicastRemoteObject implements Calc_Inter{
         }
         return "";
     }
+
+    /** 
+     *
+     * @param text
+     * @return 
+     */
     @Override
-    public BufferedReader getFilet(String list){
-        try{
-            BufferedReader br;
-            list = "Namensliste_S.txt";
-            br = new BufferedReader(new FileReader(list));
-            for(String s =br.readLine();s!=null; s=br.readLine()){}
-            //System.out.println(liste+" Impl");
-            return br;
-        } catch (Exception ex) {
+    public String[][] leseZeilen(String text){
+    /*    try {
+           FileReader datei = new FileReader(text);
+           BufferedReader br =new BufferedReader(datei);
+           String zeilen=br.readLine();
+           short i=0;
+           while(zeilen!=null){
+               String[] parts= zeilen.split(" ");
+               Calc_Impl Liste = new Calc_Impl(parts[0],parts[1],i);
+               i++;
+           }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Calc_Impl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Calc_Impl.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+        try {
+           //Inits
+           String zeilen;
+           String [][] baecker = null;
+           short i=0;
+           String [] woerds;
+           
+           FileReader datei = new FileReader(text);//Fileread- Fileptr
+           BufferedReader br =new BufferedReader(datei);//Bufferedread- Stringptr
+           do{
+               zeilen = br.readLine(); //Zeilenread
+               woerds = zeilen.split(" ");//Zeile in Woerter teilen
+               baecker[i][0]=woerds[0];//Vornamen ins Array uebernehmen
+               baecker[0][i]=woerds[1];//Nachnamen ins Array uebernehmen
+           }while(zeilen!=null);// Lese Zeilen bis Sanktnimmerleinstag
+           return baecker;
+           } catch (IOException ex) {
             Logger.getLogger(Calc_Impl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        String [][] baecker = null;
+        return baecker;
     }
 
+    /**
+     *
+     * @param text
+     * @return
+     */
+    @Override
+    public String[] leseNamen(String text){
+        try {
+           //Inits
+           
+            FileReader datei = new FileReader(text);//Fileread- Fileptr
+            BufferedReader br =new BufferedReader(datei);//Bufferedread- Stringptr
+            String zeile =br.readLine();
+            String[] baecker = zeile.split(" ");
+            return baecker;
+        }catch (IOException ex) {
+            Logger.getLogger(Calc_Impl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String[] baecker=null;
+        return baecker;
+    }
+
+    /**
+     *
+     * @param namen
+     * @param liste
+     */
+    @Override
+        public void vergleicheNamen(String[] namen,String[][] liste){
+            for (int j=0; j<=namen.length;j++){
+                for (int i=0; i<=liste.length;i++){
+                    if(namen[j].equals(liste[0][i])){
+                        System.out.println("\nTreffer bei "+liste[j][0]+" "+liste[j][1]);
+                    }
+                }
+            }
+        }
+        
 }
+    
+    
