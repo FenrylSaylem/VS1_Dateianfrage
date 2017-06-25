@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package calc_Server;
+package Calc_Server;
 
-import calc_Impl.Calc_Impl;
+import Calc_Impl.Calc_Impl;
 import java.io.IOException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -29,9 +29,9 @@ public class Calc_S {
     public static void main (String[] args){
  
             try{
-                Registry creg=LocateRegistry.createRegistry(1051);
-                Calc_Impl di=new Calc_Impl();
-                creg.rebind("calc", di);
+                Registry creg=LocateRegistry.createRegistry(1033);
+                Calc_Impl di=new Calc_Impl(standardFile);
+                creg.rebind("calc", di);//Server mit Reg wird an Aufruf Calc und di-Objekt gebunden.
                 System.out.println("Server ist bereit");
             }catch (IOException ex){
                 ex.printStackTrace();
